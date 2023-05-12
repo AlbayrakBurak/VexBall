@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Top : MonoBehaviour
 {
    
     [SerializeField] private GameManager _GameManager;
     [SerializeField] private AudioSource Topsesi;
+    
+   
     private void OnTriggerEnter(Collider other)
     {
         Topsesi.Play();
@@ -25,5 +28,13 @@ public class Top : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Topsesi.Play();
+     
+ 
     }
+
+
+    
+
+    
+    
 }
