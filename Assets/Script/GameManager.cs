@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     [Header("---LEVEL TEMEL OBJELERİ")]
     [SerializeField] private GameObject Platform;
     [SerializeField] private GameObject Pota;
+    [SerializeField] private GameObject Top;
     [SerializeField] private GameObject PotaBuyume;
+    [SerializeField] private GameObject TopKuculme;
     [SerializeField] private GameObject[] OzellikOlusmaNoktalari;
     [SerializeField] private AudioSource[] Sesler;
     [SerializeField] private ParticleSystem[] Efektler;
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
     float ParmakPozX;
     void Start()
     {
-        LevelAd.text = "LEVEL : "+ SceneManager.GetActiveScene().name;
+        LevelAd.text = "LEVEL : "+ PlayerPrefs.GetInt("Level");
 
 
         for (int i = 0; i < AtilmasiGerekenTop; i++)
@@ -41,8 +43,17 @@ public class GameManager : MonoBehaviour
     void OzellikOlussun()
     {
         int RandomSayi = Random.Range(0, OzellikOlusmaNoktalari.Length - 1);
-        PotaBuyume.transform.position = OzellikOlusmaNoktalari[RandomSayi].transform.position;
-        PotaBuyume.SetActive(true);
+        int ozellikRandom = Random.Range(0,10);
+
+        if(ozellikRandom>5){
+            PotaBuyume.transform.position = OzellikOlusmaNoktalari[RandomSayi].transform.position;
+            PotaBuyume.SetActive(true);
+        }
+        else {
+            TopKuculme.transform.position = OzellikOlusmaNoktalari[RandomSayi].transform.position;
+            TopKuculme.SetActive(true);
+        }
+       
     }
 
     void Update()
@@ -107,6 +118,13 @@ public class GameManager : MonoBehaviour
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
         Pota.transform.localScale = new Vector3(55f, 55f, 55f);
+    }
+     public void TopKucult(Vector3 Pos)
+    {
+        Efektler[1].transform.position = Pos;
+        Efektler[1].gameObject.SetActive(true);
+        Sesler[0].Play();
+        Top.transform.localScale = new Vector3(.4f,.4f,.4f);
     }
     public void Butonlarinislemleri(string Deger)
     {

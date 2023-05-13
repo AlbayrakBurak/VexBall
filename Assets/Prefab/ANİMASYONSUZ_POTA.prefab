@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1319006104035267121}
-  - component: {fileID: 1319006104035267122}
+  - component: {fileID: 2701819821809428930}
   m_Layer: 0
   m_Name: BasketHabercisi
   m_TagString: Basket
@@ -25,15 +25,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1319006104035267120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.00048, z: -0.00362}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0021}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1568576952552461981}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1319006104035267122
-SphereCollider:
+--- !u!136 &2701819821809428930
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42,9 +42,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.15156773
-  m_Center: {x: 0, y: 3.94746e-15, z: 0.34843212}
+  m_Radius: 0.15303694
+  m_Height: 0.87
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2202089526681226279
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +609,6 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 0, z: 0.001571882}
-    m_Extent: {x: 0.010234897, y: 0.010234897, z: 0.008428117}
+    m_Center: {x: -0.00000017043203, y: 0.0000055106357, z: 0.0013616532}
+    m_Extent: {x: 0.010232342, y: 0.010229705, z: 0.008841943}
   m_DirtyAABB: 0
