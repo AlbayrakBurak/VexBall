@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AnaMenu.unity
+    path: Assets/Scenes/LoadingScene.unity
     guid: 18df891188e51f24a8f3dd12eb5f04dd
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 4d7ade94f608083408a2216e6c5da7c2, type: 2}

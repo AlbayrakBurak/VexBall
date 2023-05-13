@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: dfa3290759ab8f54b8de81fd144a8940
+guid: d1497770d73fc924badff5e35da15a45
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: base color
+    second: {fileID: 2100000, guid: be8e5289d6dcb2f4aaff23ee2d95542d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: emission
+    second: {fileID: 2100000, guid: 4793b05ef5b375a42a4a5cd7444a6432, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -42,8 +52,8 @@ ModelImporter:
     sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
