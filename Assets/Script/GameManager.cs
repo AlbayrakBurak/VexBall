@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1;             
                 break;
             case "SonrakiLevel":
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 Time.timeScale = 1;
                 break;
             case "Ayarlar":
