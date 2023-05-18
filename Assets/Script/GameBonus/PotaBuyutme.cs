@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TopKucultme : MonoBehaviour
+public class PotaBuyutme : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Sure;
     [SerializeField] private int BaslangicSuresi;
@@ -14,7 +14,7 @@ public class TopKucultme : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             BaslangicSuresi--;
             Sure.text = BaslangicSuresi.ToString();
 
@@ -29,6 +29,6 @@ public class TopKucultme : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
          gameObject.SetActive(false);
-        _GameManager.TopKucult(transform.position);
+        _GameManager.PotaBuyut(transform.position);
     }
 }

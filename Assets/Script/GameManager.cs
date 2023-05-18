@@ -11,11 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Platform;
     [SerializeField] private GameObject Pota;
     [SerializeField] private GameObject Top;
-    [SerializeField] private GameObject PotaBuyume;
-    [SerializeField] private GameObject TopKuculme;
+    
     [SerializeField] private GameObject[] OzellikOlusmaNoktalari;
+    [SerializeField] GameObject[] ozellikler;
+
     [SerializeField] private AudioSource[] Sesler;
     [SerializeField] private ParticleSystem[] Efektler;
+
 
     [Header("---UI OBJELERİ")]
     [SerializeField] private Image[] GorevGorselleri;
@@ -42,17 +44,14 @@ public class GameManager : MonoBehaviour
 
     void OzellikOlussun()
     {
-        int RandomSayi = Random.Range(0, OzellikOlusmaNoktalari.Length - 1);
-        int ozellikRandom = Random.Range(0,10);
+int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
+    GameObject selectedNokta = OzellikOlusmaNoktalari[randomNoktaIndex];
 
-        if(ozellikRandom>5){
-            PotaBuyume.transform.position = OzellikOlusmaNoktalari[RandomSayi].transform.position;
-            PotaBuyume.SetActive(true);
-        }
-        else {
-            TopKuculme.transform.position = OzellikOlusmaNoktalari[RandomSayi].transform.position;
-            TopKuculme.SetActive(true);
-        }
+    int randomOzellikIndex = Random.Range(0, ozellikler.Length);
+    GameObject selectedOzellik = ozellikler[randomOzellikIndex];
+
+    GameObject ozellik = Instantiate(selectedOzellik, selectedNokta.transform.position, Quaternion.identity);
+    ozellik.SetActive(true);
        
     }
 
@@ -72,10 +71,19 @@ public class GameManager : MonoBehaviour
                         ParmakPozX = TouchPosition.x - Platform.transform.position.x;
                         break;
                     case TouchPhase.Moved:
-                        if (TouchPosition.x - ParmakPozX > -1.15 && TouchPosition.x - ParmakPozX < 1.15)
+                        if(Platform.transform.localScale.y>-45){
+                            if (TouchPosition.x - ParmakPozX > -1.65 && TouchPosition.x - ParmakPozX < 1.65)
                         {
                             Platform.transform.position = Vector3.Lerp(Platform.transform.position, new Vector3(TouchPosition.x - ParmakPozX, Platform.transform.position.y, Platform.transform.position.z), 5f);
                         }
+                        }
+                        else{
+                            if (TouchPosition.x - ParmakPozX > -1.45 && TouchPosition.x - ParmakPozX < 1.45)
+                        {
+                            Platform.transform.position = Vector3.Lerp(Platform.transform.position, new Vector3(TouchPosition.x - ParmakPozX, Platform.transform.position.y, Platform.transform.position.z), 5f);
+                        }
+                        }
+                        
                         break;
                 }
             }
@@ -124,7 +132,14 @@ public class GameManager : MonoBehaviour
         Efektler[1].transform.position = Pos;
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
-        Top.transform.localScale = new Vector3(.4f,.4f,.4f);
+        Top.transform.localScale = new Vector3(20f,20f,20f);
+    }
+     public void PlatformKucult(Vector3 Pos)
+    {
+        Efektler[1].transform.position = Pos;
+        Efektler[1].gameObject.SetActive(true);
+        Sesler[0].Play();
+        Platform.transform.localScale = new Vector3(Platform.transform.localScale.x,-40f,Platform.transform.localScale.z);
     }
     public void Butonlarinislemleri(string Deger)
     {
