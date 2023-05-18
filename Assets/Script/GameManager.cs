@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
     [Header("---LEVEL TEMEL OBJELERİ")]
     [SerializeField] private GameObject PlayerBase;
-    [SerializeField] private float PlatformSpeed=1f;
+    [SerializeField] private float PlatformSpeed=15f;
     [SerializeField] private GameObject Pota;
     [SerializeField] private GameObject Top;
     
@@ -39,13 +40,15 @@ public class GameManager : MonoBehaviour
 
         }
 
-        // Invoke("OzellikOlussun", 3f);
+        
+        
 
     }
 
     void OzellikOlussun()
     {
-int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
+     
+    int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
     GameObject selectedNokta = OzellikOlusmaNoktalari[randomNoktaIndex];
 
     int randomOzellikIndex = Random.Range(0, ozellikler.Length);
@@ -55,6 +58,9 @@ int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
     ozellik.SetActive(true);
        
     }
+    
+        
+
 
     void Update()
     {
@@ -89,6 +95,8 @@ int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
                 }
             }
         } 
+
+         
     }
     public void Basket(Vector3 Poz)
     {
@@ -97,6 +105,7 @@ int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
         Efektler[0].transform.position = Poz;
         Efektler[0].gameObject.SetActive(true);
         Sesler[1].Play();
+        ChangeHoopPosition();
         int randomCount = Random.Range(0, 5);
         if (BasketSayisi == AtilmasiGerekenTop)
         {
@@ -106,6 +115,7 @@ int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
         if (randomCount>2)
         {
             OzellikOlussun();
+           
         }
     }
     public void Kaybettin()
@@ -142,6 +152,13 @@ int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
         PlayerBase.transform.localScale = new Vector3(.5f,PlayerBase.transform.localScale.y,PlayerBase.transform.localScale.z);
+    }
+
+      void ChangeHoopPosition()
+    {
+        Sesler[0].Play();
+        Vector3 newPosition = new Vector3(Random.Range(-1.8f, 1.8f), Random.Range(-2f, 3f), Pota.transform.position.z);
+        Pota.transform.position=newPosition;
     }
     public void Butonlarinislemleri(string Deger)
     {

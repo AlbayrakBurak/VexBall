@@ -14,7 +14,7 @@ public class TopKucultme : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             BaslangicSuresi--;
             Sure.text = BaslangicSuresi.ToString();
 
