@@ -8,7 +8,8 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     [Header("---LEVEL TEMEL OBJELERİ")]
-    [SerializeField] private GameObject Platform;
+    [SerializeField] private GameObject PlayerBase;
+    [SerializeField] private float PlatformSpeed=1f;
     [SerializeField] private GameObject Pota;
     [SerializeField] private GameObject Top;
     
@@ -68,19 +69,19 @@ int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
                 switch (touch.phase)
                 {
                     case TouchPhase.Began:
-                        ParmakPozX = TouchPosition.x - Platform.transform.position.x;
+                        ParmakPozX = TouchPosition.x - PlayerBase.transform.position.x;
                         break;
                     case TouchPhase.Moved:
-                        if(Platform.transform.localScale.y>-45){
-                            if (TouchPosition.x - ParmakPozX > -1.65 && TouchPosition.x - ParmakPozX < 1.65)
+                        if(PlayerBase.transform.localScale.x>0.75f){
+                            if (TouchPosition.x - ParmakPozX > -1.1f && TouchPosition.x - ParmakPozX < 1.1f)
                         {
-                            Platform.transform.position = Vector3.Lerp(Platform.transform.position, new Vector3(TouchPosition.x - ParmakPozX, Platform.transform.position.y, Platform.transform.position.z), 5f);
+                            PlayerBase.transform.position = Vector3.Lerp(PlayerBase.transform.position, new Vector3(TouchPosition.x - ParmakPozX, PlayerBase.transform.position.y, PlayerBase.transform.position.z), PlatformSpeed);
                         }
                         }
                         else{
-                            if (TouchPosition.x - ParmakPozX > -1.45 && TouchPosition.x - ParmakPozX < 1.45)
+                            if (TouchPosition.x - ParmakPozX > -1.55f && TouchPosition.x - ParmakPozX < 1.55f)
                         {
-                            Platform.transform.position = Vector3.Lerp(Platform.transform.position, new Vector3(TouchPosition.x - ParmakPozX, Platform.transform.position.y, Platform.transform.position.z), 5f);
+                            PlayerBase.transform.position = Vector3.Lerp(PlayerBase.transform.position, new Vector3(TouchPosition.x - ParmakPozX, PlayerBase.transform.position.y, PlayerBase.transform.position.z), PlatformSpeed);
                         }
                         }
                         
@@ -96,12 +97,13 @@ int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
         Efektler[0].transform.position = Poz;
         Efektler[0].gameObject.SetActive(true);
         Sesler[1].Play();
+        int randomCount = Random.Range(0, 5);
         if (BasketSayisi == AtilmasiGerekenTop)
         {
             Kazandin();
         }
 
-        if (BasketSayisi == 1)
+        if (randomCount>2)
         {
             OzellikOlussun();
         }
@@ -139,7 +141,7 @@ int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
         Efektler[1].transform.position = Pos;
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
-        Platform.transform.localScale = new Vector3(Platform.transform.localScale.x,-40f,Platform.transform.localScale.z);
+        PlayerBase.transform.localScale = new Vector3(.5f,PlayerBase.transform.localScale.y,PlayerBase.transform.localScale.z);
     }
     public void Butonlarinislemleri(string Deger)
     {

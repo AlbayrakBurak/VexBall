@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Platform_Kucultme : MonoBehaviour
+public class PlatformKucultme : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Sure;
     [SerializeField] private int BaslangicSuresi;
