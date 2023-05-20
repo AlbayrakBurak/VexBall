@@ -21,27 +21,44 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem[] Efektler;
 
 
-    [Header("---UI OBJELERİ")]
+    [Header("---Game UI")]
     [SerializeField] private Image[] GorevGorselleri;
     [SerializeField] private Sprite GorevTamamSprite;
     [SerializeField] private int AtilmasiGerekenTop;
     [SerializeField] private GameObject[] Paneller;
     [SerializeField] private TextMeshProUGUI LevelAd;
+
+    
+    [Header("---Menu UI")]
+    
+    [SerializeField] private GameObject[] StartPanel;
     int BasketSayisi;
     float ParmakPozX;
     void Start()
     {
+        if( PlayerPrefs.GetInt("Level")==0){
+            PlayerPrefs.SetInt("Level",1);
+        }
         LevelAd.text = "LEVEL : "+ PlayerPrefs.GetInt("Level");
+       
+        if(PlayerPrefs.GetInt("Level")<3){
+            Pota.transform.localScale=new Vector3(90f, 90f, 90f);
+            AtilmasiGerekenTop=PlayerPrefs.GetInt("Level");
+            for (int i = 0; i < PlayerPrefs.GetInt("Level") ; i++)
+        {
+            GorevGorselleri[i].gameObject.SetActive(true);
+        }
+        }
 
-
+        else{
         for (int i = 0; i < AtilmasiGerekenTop; i++)
         {
             GorevGorselleri[i].gameObject.SetActive(true);
 
+        } 
         }
 
-        
-        
+
 
     }
 
@@ -128,7 +145,7 @@ public class GameManager : MonoBehaviour
     {
         Sesler[3].Play();
         Paneller[1].SetActive(true);
-        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
+        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level")+1);
         Time.timeScale = 0;
 
     }
@@ -137,7 +154,7 @@ public class GameManager : MonoBehaviour
         Efektler[1].transform.position = Poz;
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
-        Pota.transform.localScale = new Vector3(55f, 55f, 55f);
+        Pota.transform.localScale = new Vector3(75f, 75f, 75f);
     }
      public void TopKucult(Vector3 Pos)
     {
