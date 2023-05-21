@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 public class GameManager : MonoBehaviour
 {
     [Header("---LEVEL TEMEL OBJELERİ")]
-    [SerializeField] private GameObject PlayerBase;
+    [SerializeField] private GameObject Player;
     [SerializeField] private float PlatformSpeed=15f;
     [SerializeField] private GameObject Pota;
     [SerializeField] private GameObject Top;
@@ -30,12 +30,15 @@ public class GameManager : MonoBehaviour
 
     
     [Header("---Menu UI")]
-    
+    [SerializeField] private bool isGameStart=true;
+    [SerializeField] private GameObject LevelPanel;
+    [SerializeField] private GameObject PlayerBase;
     [SerializeField] private GameObject[] StartPanel;
     int BasketSayisi;
     float ParmakPozX;
     void Start()
     {
+        isGameStart=true;
         if( PlayerPrefs.GetInt("Level")==0){
             PlayerPrefs.SetInt("Level",1);
         }
@@ -92,19 +95,19 @@ public class GameManager : MonoBehaviour
                 switch (touch.phase)
                 {
                     case TouchPhase.Began:
-                        ParmakPozX = TouchPosition.x - PlayerBase.transform.position.x;
+                        ParmakPozX = TouchPosition.x - Player.transform.position.x;
                         break;
                     case TouchPhase.Moved:
-                        if(PlayerBase.transform.localScale.x>0.75f){
+                        if(Player.transform.localScale.x>0.75f){
                             if (TouchPosition.x - ParmakPozX > -1.1f && TouchPosition.x - ParmakPozX < 1.1f)
                         {
-                            PlayerBase.transform.position = Vector3.Lerp(PlayerBase.transform.position, new Vector3(TouchPosition.x - ParmakPozX, PlayerBase.transform.position.y, PlayerBase.transform.position.z), PlatformSpeed);
+                            Player.transform.position = Vector3.Lerp(Player.transform.position, new Vector3(TouchPosition.x - ParmakPozX, Player.transform.position.y, Player.transform.position.z), PlatformSpeed);
                         }
                         }
                         else{
                             if (TouchPosition.x - ParmakPozX > -1.55f && TouchPosition.x - ParmakPozX < 1.55f)
                         {
-                            PlayerBase.transform.position = Vector3.Lerp(PlayerBase.transform.position, new Vector3(TouchPosition.x - ParmakPozX, PlayerBase.transform.position.y, PlayerBase.transform.position.z), PlatformSpeed);
+                            Player.transform.position = Vector3.Lerp(Player.transform.position, new Vector3(TouchPosition.x - ParmakPozX, Player.transform.position.y, Player.transform.position.z), PlatformSpeed);
                         }
                         }
                         
@@ -126,11 +129,13 @@ public class GameManager : MonoBehaviour
         int randomCount = Random.Range(0, 5);
         if (BasketSayisi == AtilmasiGerekenTop)
         {
+            isGameStart=false;
             Kazandin();
         }
 
         if (randomCount>2)
         {
+
             OzellikOlussun();
            
         }
@@ -139,14 +144,29 @@ public class GameManager : MonoBehaviour
     {
         Sesler[2].Play();
         Paneller[2].SetActive(true);
+        isGameStart=false;
+        if(isGameStart==false){
+            PlayerBase.SetActive(false);
+            LevelPanel.SetActive(false);
+        }
         Time.timeScale = 0;
+        
+
     }
     void Kazandin()
     {
         Sesler[3].Play();
-        Paneller[1].SetActive(true);
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level")+1);
+        Paneller[1].SetActive(true);
+        if(isGameStart==false){
+            LevelPanel.SetActive(false);
+            PlayerBase.SetActive(false);
+
+        }
         Time.timeScale = 0;
+         
+        
+        
 
     }
     public void PotaBuyut(Vector3 Poz)
@@ -168,7 +188,7 @@ public class GameManager : MonoBehaviour
         Efektler[1].transform.position = Pos;
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
-        PlayerBase.transform.localScale = new Vector3(.5f,PlayerBase.transform.localScale.y,PlayerBase.transform.localScale.z);
+        Player.transform.localScale = new Vector3(.5f,Player.transform.localScale.y,Player.transform.localScale.z);
     }
 
       void ChangeHoopPosition()

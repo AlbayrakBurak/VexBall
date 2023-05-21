@@ -6,44 +6,45 @@ using UnityEngine.UI;
 using TMPro;
 
 public class AnaMenu_Manager : MonoBehaviour
-{   
-   public Image LoadingBarFill;
+{
+    public Image LoadingBarFill;
     public GameObject LoadingScreen;
     public TextMeshProUGUI loading;
 
-    
-    public void Start(){
-        LoadingBarFill.fillAmount=0.75f;
-        
-       int sceneIndex;
+    public void Start()
+    {
+        LoadingBarFill.fillAmount = 0.75f;
+
+        string sceneName="MainScene";
         if (PlayerPrefs.HasKey("Level"))
         {
-            sceneIndex=PlayerPrefs.GetInt("Level");
-        }else
+            PlayerPrefs.GetInt("Level");
+        }
+        else
         {
             PlayerPrefs.SetInt("Level", 1);
-             sceneIndex=PlayerPrefs.GetInt("Level");;
+           
         }
 
-        StartCoroutine(LoadSceneAsync(sceneIndex));
+        StartCoroutine(LoadSceneAsync(sceneName));
     }
 
-    IEnumerator LoadSceneAsync (int sceneIndex) {
-       
-       yield return new WaitForSeconds( 0.5f );
-        
-        AsyncOperation operation =SceneManager.LoadSceneAsync(sceneIndex);
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         LoadingScreen.SetActive(true);
-        
 
-        while(!operation.isDone){
-            float progressValue=Mathf.Clamp01(operation.progress/.9f);
+        while (!operation.isDone)
+        {
+            float progressValue = Mathf.Clamp01(operation.progress / 0.9f);
+            LoadingBarFill.fillAmount = progressValue;
 
-           LoadingBarFill.fillAmount=progressValue;
-           
-           loading.text=progressValue*100f+"%";
+            int percentage = (int)(progressValue * 100f);
+            loading.text = percentage.ToString("D2") + "%";
+
             yield return null;
         }
     }
-    
 }
