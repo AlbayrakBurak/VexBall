@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject LevelPanel;
     [SerializeField] private GameObject PlayerBase;
     [SerializeField] private GameObject[] StartPanel;
+
+    private GameObject ozellik=null;
     int BasketSayisi;
     float ParmakPozX;
     void Start()
@@ -65,8 +67,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void OzellikOlussun()
+     void OzellikOlussun()
     {
+        
      
     int randomNoktaIndex = Random.Range(0, OzellikOlusmaNoktalari.Length);
     GameObject selectedNokta = OzellikOlusmaNoktalari[randomNoktaIndex];
@@ -74,9 +77,11 @@ public class GameManager : MonoBehaviour
     int randomOzellikIndex = Random.Range(0, ozellikler.Length);
     GameObject selectedOzellik = ozellikler[randomOzellikIndex];
 
-    GameObject ozellik = Instantiate(selectedOzellik, selectedNokta.transform.position, Quaternion.identity);
+     ozellik = Instantiate(selectedOzellik, selectedNokta.transform.position, Quaternion.identity);
     ozellik.SetActive(true);
-       
+       if(BasketSayisi == AtilmasiGerekenTop ){
+        ozellik.SetActive(false);
+       }
     }
     
         
@@ -127,6 +132,7 @@ public class GameManager : MonoBehaviour
         Sesler[1].Play();
         ChangeHoopPosition();
         int randomCount = Random.Range(0, 5);
+        Debug.Log(randomCount);
         if (BasketSayisi == AtilmasiGerekenTop)
         {
             isGameStart=false;
@@ -135,17 +141,19 @@ public class GameManager : MonoBehaviour
 
         if (randomCount>2)
         {
-
             OzellikOlussun();
-           
         }
     }
     public void Kaybettin()
     {
         Sesler[2].Play();
         Paneller[2].SetActive(true);
+        if(ozellik!=null){
+            ozellik.SetActive(false);
+        }
         isGameStart=false;
         if(isGameStart==false){
+            
             PlayerBase.SetActive(false);
             LevelPanel.SetActive(false);
         }
@@ -158,6 +166,9 @@ public class GameManager : MonoBehaviour
         Sesler[3].Play();
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level")+1);
         Paneller[1].SetActive(true);
+        if(ozellik!=null){
+            ozellik.SetActive(false);
+        }
         if(isGameStart==false){
             LevelPanel.SetActive(false);
             PlayerBase.SetActive(false);

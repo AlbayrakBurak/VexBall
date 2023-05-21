@@ -28,8 +28,6 @@ public class Top : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Topsesi.Play();
-     
- 
     }
 
 
