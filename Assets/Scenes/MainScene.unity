@@ -7760,7 +7760,7 @@ GameObject:
   - component: {fileID: 3469287837533074003}
   m_Layer: 0
   m_Name: Platform 1
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8020,6 +8020,10 @@ PrefabInstance:
       propertyPath: _GameManager
       value: 
       objectReference: {fileID: 1145362671}
+    - target: {fileID: 6305690056393654467, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
+      propertyPath: UygulanacakGuc
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6305690056393654493, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
       propertyPath: m_UseGravity
       value: 1
@@ -8031,6 +8035,10 @@ PrefabInstance:
     - target: {fileID: 8210687744006928947, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210687744006928947, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
+      propertyPath: m_TagString
+      value: Top
       objectReference: {fileID: 0}
     - target: {fileID: 8639586428351591235, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
       propertyPath: m_RootOrder
@@ -8418,7 +8426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4043136c8e988a94babd6f2a8e7e03d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Aci: -90
+  Aci: 90
   UygulanacakGuc: 0.0003
 --- !u!1 &8008254343365136917
 GameObject:

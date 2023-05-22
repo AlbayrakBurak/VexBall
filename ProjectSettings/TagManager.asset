@@ -6,6 +6,8 @@ TagManager:
   tags:
   - OyunBitti
   - Basket
+  - Top
+  - Platform
   layers:
   - Default
   - TransparentFX
