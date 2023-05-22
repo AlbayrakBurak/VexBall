@@ -8,6 +8,8 @@ TagManager:
   - Basket
   - Top
   - Platform
+  - RightCorner
+  - LeftCorner
   layers:
   - Default
   - TransparentFX

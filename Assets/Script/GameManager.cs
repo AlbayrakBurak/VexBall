@@ -9,16 +9,36 @@ using System.Threading.Tasks;
 public class GameManager : MonoBehaviour
 {
     [Header("---LEVEL TEMEL OBJELERİ")]
-    [SerializeField] private GameObject Player;
+    [SerializeField] public GameObject Player;
     [SerializeField] private float PlatformSpeed=15f;
     [SerializeField] private GameObject Pota;
     [SerializeField] private GameObject Top;
+    
+    
     
     [SerializeField] private GameObject[] OzellikOlusmaNoktalari;
     [SerializeField] GameObject[] ozellikler;
 
     [SerializeField] private AudioSource[] Sesler;
     [SerializeField] private ParticleSystem[] Efektler;
+
+    [Header("---Game Bonus")]
+    [SerializeField] private float timeLeftHoop=5f;
+    [SerializeField] private bool timeLeftHoopGrow=false;
+    [SerializeField] private float timeLeftPlatform=5f;
+    [SerializeField] private bool timeLeftPlatformSmall=false;
+    [SerializeField] private float timeLeftBall=5f;
+    [SerializeField] private bool timeLeftBallSmall=false;
+
+
+    [Header("---Game Object Settings")]
+    [SerializeField] private Vector3 smallBallScale =new Vector3(15f,15f,15f);
+    [SerializeField] private Vector3 defaultBallScale =new Vector3(25f,25f,25f);
+    [SerializeField] private Vector3 growHoopScale =new Vector3(75f,75f,75f);
+    [SerializeField] private Vector3 defaultHoopScale =new Vector3(55f,55f,55f);
+    [SerializeField] private Vector3 defaultPlayerScale =new Vector3(1f,1f,1f);
+    [SerializeField] private Vector3 smallPlayerScale =new Vector3(0.5f,1f,1f);
+   
 
 
     [Header("---Game UI")]
@@ -40,6 +60,8 @@ public class GameManager : MonoBehaviour
     float ParmakPozX;
     void Start()
     {
+        
+        ChangeHoopPosition();
         isGameStart=true;
         if( PlayerPrefs.GetInt("Level")==0){
             PlayerPrefs.SetInt("Level",1);
@@ -47,7 +69,7 @@ public class GameManager : MonoBehaviour
         LevelAd.text = "LEVEL : "+ PlayerPrefs.GetInt("Level");
        
         if(PlayerPrefs.GetInt("Level")<3){
-            Pota.transform.localScale=new Vector3(90f, 90f, 90f);
+            // Pota.transform.localScale=new Vector3(90f, 90f, 90f);
             AtilmasiGerekenTop=PlayerPrefs.GetInt("Level");
             for (int i = 0; i < PlayerPrefs.GetInt("Level") ; i++)
         {
@@ -121,7 +143,30 @@ public class GameManager : MonoBehaviour
             }
         } 
 
-         
+        if(timeLeftHoopGrow){
+        timeLeftHoop-=Time.deltaTime;
+        if(timeLeftHoop<0){
+            Pota.transform.localScale = defaultHoopScale;
+            timeLeftHoopGrow=false;
+            timeLeftHoop=5f;
+        }        
+         }
+         if(timeLeftBallSmall){
+        timeLeftBall-=Time.deltaTime;
+        if(timeLeftBall<0){
+            Top.transform.localScale=defaultBallScale;
+            timeLeftBallSmall=false;
+            timeLeftBall=5f;
+        }        
+         }
+         if(timeLeftPlatformSmall){
+        timeLeftPlatform-=Time.deltaTime;
+        if(timeLeftPlatform<0){
+            Player.transform.localScale=defaultPlayerScale;
+            timeLeftPlatformSmall=false;
+            timeLeftPlatform=5f;
+        }        
+         }
     }
     public void Basket(Vector3 Poz)
     {
@@ -140,8 +185,9 @@ public class GameManager : MonoBehaviour
         }
 
         if (randomCount>2)
-        {
-            OzellikOlussun();
+        {   
+            if(PlayerPrefs.GetInt("Level")>2){
+            OzellikOlussun();}
         }
     }
     public void Kaybettin()
@@ -185,14 +231,17 @@ public class GameManager : MonoBehaviour
         Efektler[1].transform.position = Poz;
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
-        Pota.transform.localScale = new Vector3(75f, 75f, 75f);
+        Pota.transform.localScale = growHoopScale;
+        timeLeftHoopGrow=true;
+
     }
      public void TopKucult(Vector3 Pos)
     {
         Efektler[1].transform.position = Pos;
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
-        Top.transform.localScale = new Vector3(20f,20f,20f);
+        Top.transform.localScale = smallBallScale;
+        timeLeftBallSmall=true;
     }
      public void PlatformKucult(Vector3 Pos)
     {
@@ -200,13 +249,21 @@ public class GameManager : MonoBehaviour
         Efektler[1].gameObject.SetActive(true);
         Sesler[0].Play();
         Player.transform.localScale = new Vector3(.5f,Player.transform.localScale.y,Player.transform.localScale.z);
+        timeLeftPlatformSmall=true;
     }
 
       void ChangeHoopPosition()
-    {
+    {   
         Sesler[0].Play();
-        Vector3 newPosition = new Vector3(Random.Range(-1.8f, 1.8f), Random.Range(-2f, 3f), Pota.transform.position.z);
-        Pota.transform.position=newPosition;
+        if(BasketSayisi==0 ){
+             Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(1.5f, 3.10f), Pota.transform.position.z);
+              Pota.transform.position=newPosition;
+        }else{
+             Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(-1.5f, 3.10f), Pota.transform.position.z);
+              Pota.transform.position=newPosition;
+        }
+       
+       
     }
     public void Butonlarinislemleri(string Deger)
     {

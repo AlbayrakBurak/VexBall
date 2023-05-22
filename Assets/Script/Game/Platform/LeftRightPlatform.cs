@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Platform_Guc : MonoBehaviour
+public class LeftRightPlatform : MonoBehaviour
 {
     [SerializeField] private float Aci;
     [SerializeField] private float UygulanacakGuc;
