@@ -34,8 +34,10 @@ public class GameManager : MonoBehaviour
     [Header("---Game Object Settings")]
     [SerializeField] private Vector3 smallBallScale =new Vector3(15f,15f,15f);
     [SerializeField] private Vector3 defaultBallScale =new Vector3(25f,25f,25f);
+    
     [SerializeField] private Vector3 growHoopScale =new Vector3(75f,75f,75f);
     [SerializeField] private Vector3 defaultHoopScale =new Vector3(55f,55f,55f);
+    
     [SerializeField] private Vector3 defaultPlayerScale =new Vector3(1f,1f,1f);
     [SerializeField] private Vector3 smallPlayerScale =new Vector3(0.5f,1f,1f);
    
@@ -166,7 +168,7 @@ public class GameManager : MonoBehaviour
             timeLeftPlatformSmall=false;
             timeLeftPlatform=5f;
         }        
-         }
+        }
     }
     public void Basket(Vector3 Poz)
     {
