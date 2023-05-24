@@ -11,7 +11,7 @@ public class OdulluGecisReklam : MonoBehaviour
 #elif UNITY_IPHONE
         string _adUnitID = "ca-app-pub-3940256099942544/6978759866";
 #else
-        //string _adUnitID = "ca-app-pub-7605629714512840/3712838439";
+        string _adUnitID = "unused";
 #endif
 
     RewardedInterstitialAd _OdulluGecisReklam;

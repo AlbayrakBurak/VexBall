@@ -11,7 +11,7 @@ public class BannerReklami : MonoBehaviour
 #elif UNITY_IPHONE
         string _adUnitID = "ca-app-pub-3940256099942544/2934735716";
 #else
-        //string _adUnitID = "ca-app-pub-7605629714512840/5621333399";
+        string _adUnitID = "ca-app-pub-7605629714512840/5621333399";
 #endif
 
     BannerView _Banner;

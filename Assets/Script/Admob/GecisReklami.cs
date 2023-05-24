@@ -6,13 +6,13 @@ using UnityEngine;
 public class GecisReklami : MonoBehaviour
 {
     
-//ca-app-pub-7605629714512840/6579191840
+
 #if UNITY_EDITOR
     string _adUnitID = "ca-app-pub-3940256099942544/1033173712";
 #elif UNITY_IPHONE
         string _adUnitID = "ca-app-pub-3940256099942544/4411468910";
 #else
-        //string _adUnitID = "ca-app-pub-7605629714512840/6579191840";
+        string _adUnitID = "ca-app-pub-7605629714512840/6579191840";
 #endif
 
     InterstitialAd _GecisReklami;
@@ -99,6 +99,7 @@ public class GecisReklami : MonoBehaviour
         {           
             _GecisReklami.Show();
             Debug.Log("reklam g�sterildi");
+            Debug.Log(_adUnitID);
         }
         else
         {
@@ -111,5 +112,7 @@ public class GecisReklami : MonoBehaviour
     {
         _GecisReklami.Destroy();
     }
+
+
     
 }
