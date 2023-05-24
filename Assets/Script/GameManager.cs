@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject Player;
     [SerializeField] private float PlatformSpeed=15f;
     [SerializeField] private GameObject Pota;
-    [SerializeField] private GameObject Top;
+     public GameObject Top;
     
     
     
@@ -50,12 +50,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] Paneller;
     [SerializeField] private TextMeshProUGUI LevelAd;
 
+
     
     [Header("---Menu UI")]
-    [SerializeField] private bool isGameStart=true;
+    [SerializeField] public  bool isGameStart=true;
     [SerializeField] private GameObject LevelPanel;
     [SerializeField] private GameObject PlayerBase;
     [SerializeField] private GameObject[] StartPanel;
+    [SerializeField] private TMP_Text Count;
+    [SerializeField] public GameObject FailPanel;
+
+
+      
+    [Header("---ADMOB")]
+
+     public GameObject RewardContinueButton;
+     [SerializeField] private GameObject Admob;
+    
+
 
     private GameObject ozellik=null;
     int BasketSayisi;
@@ -63,8 +75,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         
-        ChangeHoopPosition();
+
         isGameStart=true;
+        
+        ChangeHoopPosition();
+        
         if( PlayerPrefs.GetInt("Level")==0){
             PlayerPrefs.SetInt("Level",1);
         }
@@ -112,9 +127,11 @@ public class GameManager : MonoBehaviour
 
 
     void Update()
-    {
+    {   
+        
         if (Time.timeScale!=0)
         {
+
 
             if (Input.touchCount>0)
             {
@@ -144,6 +161,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         } 
+        
 
         if(timeLeftHoopGrow){
         timeLeftHoop-=Time.deltaTime;
@@ -199,13 +217,16 @@ public class GameManager : MonoBehaviour
         if(ozellik!=null){
             ozellik.SetActive(false);
         }
+        Top.transform.position=new Vector3(0,1f,-0.119999997f);
+     PlayerBase.transform.position=new Vector3 (0f,-2.78f,0f);
         isGameStart=false;
         if(isGameStart==false){
             
             PlayerBase.SetActive(false);
             LevelPanel.SetActive(false);
+            Time.timeScale = 0;
         }
-        Time.timeScale = 0;
+
         
 
     }
@@ -220,14 +241,23 @@ public class GameManager : MonoBehaviour
         if(isGameStart==false){
             LevelPanel.SetActive(false);
             PlayerBase.SetActive(false);
-
+            Time.timeScale = 0;
         }
-        Time.timeScale = 0;
+        
+
          
         
         
 
     }
+
+    
+
+
+ 
+
+
+
     public void PotaBuyut(Vector3 Poz)
     {
         Efektler[1].transform.position = Poz;
@@ -267,6 +297,7 @@ public class GameManager : MonoBehaviour
        
        
     }
+    GecisReklami _gecisReklami=new GecisReklami();
     public void Butonlarinislemleri(string Deger)
     {
 
