@@ -2,6 +2,8 @@ using GoogleMobileAds.Api;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class OdulluGecisReklam : MonoBehaviour
 {
@@ -11,10 +13,21 @@ public class OdulluGecisReklam : MonoBehaviour
 #elif UNITY_IPHONE
         string _adUnitID = "ca-app-pub-3940256099942544/6978759866";
 #else
-        string _adUnitID = "unused";
+        string _adUnitID = "ca-app-pub-7605629714512840/2903734358";
 #endif
 
     RewardedInterstitialAd _OdulluGecisReklam;
+    public Button RewardContinueButton;
+    public GameObject FailPanel;
+    public GameObject LevelPanel;
+    public GameObject PlayerBase;
+    public TextMeshProUGUI Count;
+    public GameObject CountPanel;
+    public GameObject Top;
+    public float count=4f;
+    public bool CountDownActive=false;
+    GameManager _gameManager=new GameManager();
+
     void Start()
     {
         MobileAds.Initialize((InitializationStatus initStatus) =>
@@ -95,7 +108,13 @@ public class OdulluGecisReklam : MonoBehaviour
             _OdulluGecisReklam.Show((Reward reward) =>
             {
                 Debug.Log(string.Format(OdulMesaji, reward.Type, reward.Amount));
-
+                Debug.Log(string.Format(OdulMesaji, reward.Type, reward.Amount));
+                RewardContinueButton.interactable=false;
+                FailPanel.SetActive(false); 
+                LevelPanel.SetActive(true);
+                PlayerBase.SetActive(true);
+                Top.GetComponent<Rigidbody>().isKinematic=true;
+                CountDownActive=true;
             });
         }
         else
@@ -107,5 +126,21 @@ public class OdulluGecisReklam : MonoBehaviour
     void ReklamiOldur()
     {
         _OdulluGecisReklam.Destroy();
+    }
+        void Update(){
+        if(CountDownActive){
+        count-=Time.deltaTime;
+        int _count=(int)count;
+        CountPanel.SetActive(true);
+        Count.text=_count.ToString("D1");
+        if(count<1){
+            Time.timeScale=1f;    
+            CountDownActive=false;
+        CountPanel.SetActive(false);
+            count=4f;
+            Top.GetComponent<Rigidbody>().isKinematic=false;
+        }        
+    }
+
     }
 }

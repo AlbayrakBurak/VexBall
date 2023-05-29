@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: 4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4c8e0c35f323ad247ad6f590170279e5, type: 2}
   m_sharedMaterial: {fileID: 530860064029490685, guid: 4c8e0c35f323ad247ad6f590170279e5, type: 2}
@@ -2498,7 +2498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &887262988
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4270,9 +4270,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1880770343}
-        m_TargetAssemblyTypeName: OdulluReklam, Assembly-CSharp
-        m_MethodName: OdulluReklamGoster
+      - m_Target: {fileID: 1880770344}
+        m_TargetAssemblyTypeName: OdulluGecisReklam, Assembly-CSharp
+        m_MethodName: OdulluGecisReklamGoster
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7134,8 +7134,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1880770339}
   - component: {fileID: 1880770340}
-  - component: {fileID: 1880770343}
   - component: {fileID: 1880770341}
+  - component: {fileID: 1880770344}
   m_Layer: 0
   m_Name: Admob
   m_TagString: Untagged
@@ -7182,7 +7182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a758e9146a7c0f645b0e1ba9af49b57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1880770343
+--- !u!114 &1880770344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7191,7 +7191,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1880770337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb67c4240fedfe41965ad449818e2c0, type: 3}
+  m_Script: {fileID: 11500000, guid: cd29b0f9dc2bf6945876f3f0fa3e1721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RewardContinueButton: {fileID: 1288405191}
@@ -7201,7 +7201,7 @@ MonoBehaviour:
   Count: {fileID: 17150859}
   CountPanel: {fileID: 887262987}
   Top: {fileID: 5788835110680146369}
-  count: 3
+  count: 4
   CountDownActive: 0
 --- !u!1 &1883499410
 GameObject:
@@ -8748,7 +8748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8639586428351591235, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8639586428351591235, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
       propertyPath: m_LocalPosition.z

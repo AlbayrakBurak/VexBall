@@ -24,8 +24,13 @@ public class GecisReklami : MonoBehaviour
             
         });
         GecisReklamiOlustur();
-        GecisReklamiGoster();
+        int randomX = Random.Range(0, 5);
+        Debug.Log(randomX);
+        if(randomX>=2){
 
+      
+        GecisReklamiGoster();
+        }
     }
 
     void GecisReklamiOlustur()
@@ -43,7 +48,7 @@ public class GecisReklami : MonoBehaviour
             {
                 if (error != null || Ad==null) {
 
-                    Debug.LogError("Reklam y�klenirken hata olu�tu HATA : " + error);
+                Debug.LogError("Reklam yüklenirken hata oluştu. HATA: " + error);
                     return;
                 }
 
@@ -59,35 +64,37 @@ public class GecisReklami : MonoBehaviour
     {
         ad.OnAdPaid += (AdValue adValue) =>
         {
-            Debug.Log(string.Format("�d�ll� Reklam {0} {1}.",
-                adValue.Value,
-                adValue.CurrencyCode));
+          Debug.Log(string.Format("Ödüllü Reklam {0} {1}.", 
+          adValue.Value, 
+          adValue.CurrencyCode
+          ));
+
         };
 
         ad.OnAdImpressionRecorded += () =>
         {
-            Debug.Log("Ge�i� reklam� bir g�sterim kaydetti.");
+            Debug.Log("Geçiş reklamı bir gösterim kaydetti.");
         };
 
         ad.OnAdClicked += () =>
         {
-            Debug.Log("Ge�i� reklam� t�kland�.");
+            Debug.Log("Geçiş reklamı tıklandı.");
         };
 
         ad.OnAdFullScreenContentOpened += () =>
         {
-            Debug.Log("Ge�i� reklam� tam ekran a��ld�.");
+            Debug.Log("Geçiş reklamı tam ekran açıldı.");
         };
 
         ad.OnAdFullScreenContentClosed += () =>
         {
-            Debug.Log("Ge�i� reklam� kapat�ld�.");
+            Debug.Log("Geçiş reklamı kapatıldı.");
             GecisReklamiOlustur();
         };
 
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
-            Debug.Log("Ge�i� reklam� a��lamad�. HATA : " + error);
+            Debug.Log("Geçiş reklamı açılamadı. HATA: " + error);
             GecisReklamiOlustur();
         };
     }
@@ -98,12 +105,12 @@ public class GecisReklami : MonoBehaviour
         if (_GecisReklami != null && _GecisReklami.CanShowAd())
         {           
             _GecisReklami.Show();
-            Debug.Log("reklam g�sterildi");
+            Debug.Log("Reklam gösterildi");
             Debug.Log(_adUnitID);
         }
         else
         {
-            Debug.Log("Ge�i� reklam� hen�z haz�r de�il");
+            Debug.Log("Geçiş reklamı henüz hazır değil");
         }
 
     }

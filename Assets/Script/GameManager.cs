@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject Player;
     [SerializeField] private float PlatformSpeed=15f;
     [SerializeField] private GameObject Pota;
-     public GameObject Top;
+    public GameObject Top;
     
     
     
@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         
+        Time.timeScale=1;
 
         isGameStart=true;
         
@@ -101,9 +102,6 @@ public class GameManager : MonoBehaviour
 
         } 
         }
-
-
-
     }
 
      void OzellikOlussun()
@@ -243,19 +241,7 @@ public class GameManager : MonoBehaviour
             PlayerBase.SetActive(false);
             Time.timeScale = 0;
         }
-        
-
-         
-        
-        
-
     }
-
-    
-
-
- 
-
 
 
     public void PotaBuyut(Vector3 Poz)
@@ -283,20 +269,29 @@ public class GameManager : MonoBehaviour
         Player.transform.localScale = new Vector3(.5f,Player.transform.localScale.y,Player.transform.localScale.z);
         timeLeftPlatformSmall=true;
     }
+void ChangeHoopPosition()
+{
+    Sesler[0].Play();
 
-      void ChangeHoopPosition()
-    {   
-        Sesler[0].Play();
-        if(BasketSayisi==0 ){
-             Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(1.5f, 3.10f), Pota.transform.position.z);
-              Pota.transform.position=newPosition;
-        }else{
-             Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(-1.5f, 3.10f), Pota.transform.position.z);
-              Pota.transform.position=newPosition;
-        }
-       
-       
+    if (BasketSayisi == 0)
+    {
+        Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(1.5f, 3.10f), Pota.transform.position.z);
+        Pota.transform.position = newPosition;
     }
+    else
+    {   Pota.SetActive(false);
+        StartCoroutine(DelayedHoopPositionChange());
+    }
+}
+
+IEnumerator DelayedHoopPositionChange()
+{
+    yield return new WaitForSeconds(1f); // Delay for 2 seconds
+    Pota.SetActive(true);
+    Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(-1.5f, 3.10f), Pota.transform.position.z);
+    Pota.transform.position = newPosition;
+}
+
     GecisReklami _gecisReklami=new GecisReklami();
     public void Butonlarinislemleri(string Deger)
     {
@@ -314,6 +309,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case "Tekrar":
+            
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 Time.timeScale = 1;             
                 break;
@@ -322,11 +318,11 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1;
                 break;
             case "Ayarlar":
-                // ayarlar paneli yapılabilir. sana bırakıyorum
+
                 break;
 
             case "cikis":
-                Application.Quit(); // emin msin paneli ypaıalbilir. Run controlde yaptık.
+                Application.Quit(); 
                 break;
 
         }
