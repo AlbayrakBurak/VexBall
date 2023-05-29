@@ -185,6 +185,9 @@ public class GameManager : MonoBehaviour
             timeLeftPlatform=5f;
         }        
         }
+
+
+
     }
     public void Basket(Vector3 Poz)
     {
@@ -215,15 +218,18 @@ public class GameManager : MonoBehaviour
         if(ozellik!=null){
             ozellik.SetActive(false);
         }
-        Top.transform.position=new Vector3(0,1f,-0.119999997f);
-     PlayerBase.transform.position=new Vector3 (0f,-2.78f,0f);
+        Top.transform.position=new Vector3(0,0,-0.119999997f);
+        Top.SetActive(false);
+        PlayerBase.transform.position=new Vector3 (0f,-2.78f,0f);
         isGameStart=false;
         if(isGameStart==false){
             
             PlayerBase.SetActive(false);
             LevelPanel.SetActive(false);
             Time.timeScale = 0;
+            
         }
+
 
         
 

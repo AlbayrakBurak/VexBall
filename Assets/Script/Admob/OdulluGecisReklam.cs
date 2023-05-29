@@ -114,6 +114,7 @@ public class OdulluGecisReklam : MonoBehaviour
                 LevelPanel.SetActive(true);
                 PlayerBase.SetActive(true);
                 Top.GetComponent<Rigidbody>().isKinematic=true;
+                
                 CountDownActive=true;
             });
         }
@@ -129,6 +130,8 @@ public class OdulluGecisReklam : MonoBehaviour
     }
         void Update(){
         if(CountDownActive){
+        Top.SetActive(true);
+
         count-=Time.deltaTime;
         int _count=(int)count;
         CountPanel.SetActive(true);
