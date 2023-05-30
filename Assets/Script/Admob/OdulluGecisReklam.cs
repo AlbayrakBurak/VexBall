@@ -107,15 +107,12 @@ public class OdulluGecisReklam : MonoBehaviour
         {
             _OdulluGecisReklam.Show((Reward reward) =>
             {
+                
                 Debug.Log(string.Format(OdulMesaji, reward.Type, reward.Amount));
-                Debug.Log(string.Format(OdulMesaji, reward.Type, reward.Amount));
-                RewardContinueButton.interactable=false;
-                FailPanel.SetActive(false); 
-                LevelPanel.SetActive(true);
-                PlayerBase.SetActive(true);
-                Top.GetComponent<Rigidbody>().isKinematic=true;
+                 RewardContinueButton.interactable=false;
                 
                 CountDownActive=true;
+                Top.GetComponent<Rigidbody>().isKinematic=true;
             });
         }
         else
@@ -130,20 +127,37 @@ public class OdulluGecisReklam : MonoBehaviour
     }
         void Update(){
         if(CountDownActive){
-        Top.SetActive(true);
-
-        count-=Time.deltaTime;
+        FailPanel.SetActive(false); 
+                LevelPanel.SetActive(true);
+                PlayerBase.SetActive(true);
+                Top.SetActive(true);
+                Time.timeScale=1f;  
+                count-=Time.deltaTime;
+                
         int _count=(int)count;
         CountPanel.SetActive(true);
         Count.text=_count.ToString("D1");
-        if(count<1){
-            Time.timeScale=1f;    
+        Debug.Log("TUM ISLEMLER BİTTİ"+count); 
+        } 
+        if(count<1){ 
             CountDownActive=false;
-        CountPanel.SetActive(false);
-            count=4f;
-            Top.GetComponent<Rigidbody>().isKinematic=false;
-        }        
+            Debug.Log("ife Girdi");
+            ContinueGame();
+                 
+           
+              
     }
+
+    }
+
+    public void ContinueGame(){
+  
+
+        CountPanel.SetActive(false);
+        
+            count=4f;
+            Debug.Log("4f Girdi");
+            Top.GetComponent<Rigidbody>().isKinematic=false;       
 
     }
 }
