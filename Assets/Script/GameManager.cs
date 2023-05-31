@@ -125,40 +125,30 @@ public class GameManager : MonoBehaviour
 
 
     void Update()
-    {   
-        
-        if (Time.timeScale!=0)
+{
+    if (Time.timeScale != 0)
+    {
+        if (Input.touchCount > 0)
         {
+            Touch touch = Input.GetTouch(0);
+            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
 
-
-            if (Input.touchCount>0)
+            if (touch.phase == TouchPhase.Began)
             {
-                Touch touch = Input.GetTouch(0);
-                Vector3 TouchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x,touch.position.y,10));
-
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
-                        ParmakPozX = TouchPosition.x - Player.transform.position.x;
-                        break;
-                    case TouchPhase.Moved:
-                        if(Player.transform.localScale.x>0.75f){
-                            if (TouchPosition.x - ParmakPozX > -1.1f && TouchPosition.x - ParmakPozX < 1.1f)
-                        {
-                            Player.transform.position = Vector3.Lerp(Player.transform.position, new Vector3(TouchPosition.x - ParmakPozX, Player.transform.position.y, Player.transform.position.z), PlatformSpeed);
-                        }
-                        }
-                        else{
-                            if (TouchPosition.x - ParmakPozX > -1.55f && TouchPosition.x - ParmakPozX < 1.55f)
-                        {
-                            Player.transform.position = Vector3.Lerp(Player.transform.position, new Vector3(TouchPosition.x - ParmakPozX, Player.transform.position.y, Player.transform.position.z), PlatformSpeed);
-                        }
-                        }
-                        
-                        break;
-                }
+                ParmakPozX = touchPosition.x - Player.transform.position.x;
             }
-        } 
+            else if (touch.phase == TouchPhase.Moved)
+            {
+                float minX = Player.transform.localScale.x > 0.75f ? -1.1f : -1.55f;
+                float maxX = Player.transform.localScale.x > 0.75f ? 1.1f : 1.55f;
+                float clampedX = Mathf.Clamp(touchPosition.x - ParmakPozX, minX, maxX);
+                Vector3 newPosition = new Vector3(clampedX, Player.transform.position.y, Player.transform.position.z);
+                Player.transform.position = Vector3.Lerp(Player.transform.position, newPosition, PlatformSpeed);
+            }
+        }
+    }
+
+
         
 
         if(timeLeftHoopGrow){
@@ -281,7 +271,7 @@ void ChangeHoopPosition()
 
     if (BasketSayisi == 0)
     {
-        Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(1.5f, 3.10f), Pota.transform.position.z);
+        Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(2f, 3.5f), Pota.transform.position.z);
         Pota.transform.position = newPosition;
     }
     else
@@ -292,9 +282,9 @@ void ChangeHoopPosition()
 
 IEnumerator DelayedHoopPositionChange()
 {
-    yield return new WaitForSeconds(1f); // Delay for 2 seconds
+    yield return new WaitForSeconds(0.75f); // Delay for 2 seconds
     Pota.SetActive(true);
-    Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(-1.5f, 3.10f), Pota.transform.position.z);
+    Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(2f, 3.5f), Pota.transform.position.z);
     Pota.transform.position = newPosition;
 }
 

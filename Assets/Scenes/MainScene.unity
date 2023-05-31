@@ -3117,6 +3117,7 @@ GameObject:
   - component: {fileID: 1145362674}
   - component: {fileID: 1145362673}
   - component: {fileID: 1145362672}
+  - component: {fileID: 1145362678}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3686,6 +3687,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1145362678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145362669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5afa29cc77f68264eb88acdf7a1ec8cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 6188818849241936628, guid: fbdcbb51cb00a424ab8124a8115f3ff3, type: 3}
+  minPosX: -1.75
+  maxPosX: 1.75
+  spacing: 1.25
 --- !u!1 &1152747160
 GameObject:
   m_ObjectHideFlags: 0
@@ -8748,7 +8765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8639586428351591235, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8639586428351591235, guid: 33a1ce99c00520746a2d488ac2da3c8e, type: 3}
       propertyPath: m_LocalPosition.z
