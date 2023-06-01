@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
         
 
 
-    void Update()
+void Update()
 {
     if (Time.timeScale != 0)
     {
@@ -139,14 +139,24 @@ public class GameManager : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved)
             {
-                float minX = Player.transform.localScale.x > 0.75f ? -1.1f : -1.55f;
-                float maxX = Player.transform.localScale.x > 0.75f ? 1.1f : 1.55f;
+                float screenWidth = Screen.width;
+                float screenMinX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 10)).x;
+                float screenMaxX = Camera.main.ScreenToWorldPoint(new Vector3(screenWidth, 0, 10)).x;
+
+                float margin = 0.25f;
+                float minX = Player.transform.localScale.x > 0.75f ? screenMinX + margin + 1.1f : screenMinX + margin + 1.55f;
+                float maxX = Player.transform.localScale.x > 0.75f ? screenMaxX - margin - 1.1f : screenMaxX - margin - 1.55f;
+
                 float clampedX = Mathf.Clamp(touchPosition.x - ParmakPozX, minX, maxX);
                 Vector3 newPosition = new Vector3(clampedX, Player.transform.position.y, Player.transform.position.z);
                 Player.transform.position = Vector3.Lerp(Player.transform.position, newPosition, PlatformSpeed);
             }
         }
     }
+
+
+
+
 
 
         
