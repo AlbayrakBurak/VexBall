@@ -3857,8 +3857,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0236328, y: 24.060417, z: 5}
-  m_Center: {x: 0.3281835, y: 0, z: 0}
+  m_Size: {x: 1.0236328, y: 40, z: 5}
+  m_Center: {x: 0.3, y: 0, z: 0}
 --- !u!212 &1222924716
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3866,7 +3866,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222924714}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -4792,7 +4792,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452610503}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -4866,8 +4866,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0930998, y: 24.060417, z: 5}
-  m_Center: {x: 0.29345, y: 0, z: 0}
+  m_Size: {x: 1.0930998, y: 40, z: 5}
+  m_Center: {x: 0.3, y: 0, z: 0}
 --- !u!212 &1453207803
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4875,7 +4875,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453207801}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -7538,7 +7538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1923636647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7828,7 +7828,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964803574}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
