@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     [Header("---Game UI")]
     [SerializeField] private Image[] GorevGorselleri;
-    [SerializeField] private Sprite GorevTamamSprite;
+    [SerializeField] private Sprite AtilanBasketSprite;
     [SerializeField] private int AtilmasiGerekenTop;
     [SerializeField] private GameObject[] Paneller;
     [SerializeField] private TextMeshProUGUI LevelAd;
@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
     public void Basket(Vector3 Poz)
     {
         BasketSayisi++;
-        GorevGorselleri[BasketSayisi - 1].sprite = GorevTamamSprite;
+        GorevGorselleri[BasketSayisi - 1].sprite = AtilanBasketSprite;
         Efektler[0].transform.position = Poz;
         Efektler[0].gameObject.SetActive(true);
         Sesler[1].Play();
