@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.Threading.Tasks;
+using UnityEngine.Android;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,13 +24,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem[] Efektler;
 
     [Header("---Game Bonus")]
+    [SerializeField] private float timeLeft = 5f;
+
     [SerializeField] private float timeLeftHoop = 5f;
     [SerializeField] private bool timeLeftHoopGrow = false;
     [SerializeField] private float timeLeftPlatform = 5f;
     [SerializeField] private bool timeLeftPlatformSmall = false;
     [SerializeField] private float timeLeftBall = 5f;
     [SerializeField] private bool timeLeftBallSmall = false;
-
 
     [Header("---Game Object Settings")]
     [SerializeField] private Vector3 smallBallScale = new Vector3(15f, 15f, 15f);
@@ -42,14 +44,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 smallPlayerScale = new Vector3(0.5f, 1f, 1f);
 
 
-
     [Header("---Game UI")]
     [SerializeField] private Image[] GorevGorselleri;
     [SerializeField] private Sprite AtilanBasketSprite;
     [SerializeField] private int AtilmasiGerekenTop;
     [SerializeField] private GameObject[] Paneller;
     [SerializeField] private TextMeshProUGUI LevelAd;
-
 
 
     [Header("---Menu UI")]
@@ -106,168 +106,183 @@ public class GameManager : MonoBehaviour
         GameObject selectedNokta = OzellikOlusmaNoktalari[randomNoktaIndex];
         int randomOzellikIndex = Random.Range(0, ozellikler.Length);
         GameObject selectedOzellik = ozellikler[randomOzellikIndex];
+
+        if (ozellik != null)
+        {
+            Destroy(ozellik);
+        }
+
         ozellik = Instantiate(selectedOzellik, selectedNokta.transform.position, Quaternion.identity);
         ozellik.SetActive(true);
+
         if (BasketSayisi == AtilmasiGerekenTop)
         {
             ozellik.SetActive(false);
         }
     }
+
     void Update()
     {
-        if (Time.timeScale != 0)
+        if (Time.timeScale == 0)
         {
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-                Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
+            return;
+        }
 
-                if (touch.phase == TouchPhase.Began)
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                ParmakPozX = touchPosition.x - Player.transform.position.x;
+            }
+            else if (touch.phase == TouchPhase.Moved)
+            {
+                float screenWidth = Screen.width;
+                float screenMinX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 10)).x;
+                float screenMaxX = Camera.main.ScreenToWorldPoint(new Vector3(screenWidth, 0, 10)).x;
+
+                float margin = 0.5f;
+                float minX, maxX;
+
+                if (Player.transform.localScale.x <= 0.5f)
                 {
-                    ParmakPozX = touchPosition.x - Player.transform.position.x;
+                    minX = screenMinX + margin + 0.55f;
+                    maxX = screenMaxX - margin - 0.55f;
                 }
-                else if (touch.phase == TouchPhase.Moved)
+                else
                 {
-                    float screenWidth = Screen.width;
-                    float screenMinX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 10)).x;
-                    float screenMaxX = Camera.main.ScreenToWorldPoint(new Vector3(screenWidth, 0, 10)).x;
-
-                    float margin = 0.5f;
-                    float minX, maxX;
-
-                    if (Player.transform.localScale.x <= 0.5f)
-                    {
-                        minX = screenMinX + margin + 0.55f;
-                        maxX = screenMaxX - margin - 0.55f;
-                    }
-                    else
-                    {
-                        minX = Player.transform.localScale.x > 0.75f ? screenMinX + margin + 1.1f : screenMinX + margin + 1.55f;
-                        maxX = Player.transform.localScale.x > 0.75f ? screenMaxX - margin - 1.1f : screenMaxX - margin - 1.55f;
-                    }
-
-                    float clampedX = Mathf.Clamp(touchPosition.x - ParmakPozX, minX, maxX);
-                    Vector3 newPosition = new Vector3(clampedX, Player.transform.position.y, Player.transform.position.z);
-                    Player.transform.position = Vector3.Lerp(Player.transform.position, newPosition, PlatformSpeed);
+                    minX = Player.transform.localScale.x > 0.75f ? screenMinX + margin + 1.1f : screenMinX + margin + 1.55f;
+                    maxX = Player.transform.localScale.x > 0.75f ? screenMaxX - margin - 1.1f : screenMaxX - margin - 1.55f;
                 }
+
+                float clampedX = Mathf.Clamp(touchPosition.x - ParmakPozX, minX, maxX);
+                Vector3 newPosition = new Vector3(clampedX, Player.transform.position.y, Player.transform.position.z);
+                Player.transform.position = Vector3.Lerp(Player.transform.position, newPosition, PlatformSpeed);
             }
         }
-        if (timeLeftHoopGrow)
+
+        UpdateTimer(ref timeLeftHoop, ref timeLeftHoopGrow, Pota, defaultHoopScale);
+        UpdateTimer(ref timeLeftBall, ref timeLeftBallSmall, Top, defaultBallScale);
+        UpdateTimer(ref timeLeftPlatform, ref timeLeftPlatformSmall, Player, defaultPlayerScale);
+    }
+
+    void UpdateTimer(ref float timeLeft, ref bool isTimerRunning, GameObject targetObject, Vector3 defaultScale)
+    {
+        if (isTimerRunning)
         {
-            timeLeftHoop -= Time.deltaTime;
-            if (timeLeftHoop < 0)
+            timeLeft -= Time.deltaTime;
+            if (timeLeft < 0)
             {
-                Pota.transform.localScale = defaultHoopScale;
-                timeLeftHoopGrow = false;
-                timeLeftHoop = 5f;
-            }
-        }
-        if (timeLeftBallSmall)
-        {
-            timeLeftBall -= Time.deltaTime;
-            if (timeLeftBall < 0)
-            {
-                Top.transform.localScale = defaultBallScale;
-                timeLeftBallSmall = false;
-                timeLeftBall = 5f;
-            }
-        }
-        if (timeLeftPlatformSmall)
-        {
-            timeLeftPlatform -= Time.deltaTime;
-            if (timeLeftPlatform < 0)
-            {
-                Player.transform.localScale = defaultPlayerScale;
-                timeLeftPlatformSmall = false;
-                timeLeftPlatform = 5f;
+                targetObject.transform.localScale = defaultScale;
+                isTimerRunning = false;
             }
         }
     }
-    public void Basket(Vector3 Poz)
-    {
-        BasketSayisi++;
-        GorevGorselleri[BasketSayisi - 1].sprite = AtilanBasketSprite;
-        Efektler[0].transform.position = Poz;
-        Efektler[0].gameObject.SetActive(true);
-        Sesler[1].Play();
-        ChangeHoopPosition();
-        int randomCount = Random.Range(0, 5);
-        Debug.Log(randomCount);
-        if (BasketSayisi == AtilmasiGerekenTop)
-        {
-            isGameStart = false;
-            Kazandin();
-        }
 
-        if (randomCount > 2)
-        {
-            if (PlayerPrefs.GetInt("Level") > 2)
-            {
-                OzellikOlussun();
-            }
-        }
+   public void Basket(Vector3 poz)
+{
+     if (Application.platform == RuntimePlatform.Android)
+    {   
+        Handheld.Vibrate();
     }
-    public void Kaybettin()
+    BasketSayisi++;
+    GorevGorselleri[BasketSayisi - 1].sprite = AtilanBasketSprite;
+    Efektler[0].transform.position = poz;
+    Efektler[0].gameObject.SetActive(true);
+    Sesler[1].Play();
+    ChangeHoopPosition();
+    
+    int randomCount = Random.Range(0, 5);
+    Debug.Log(randomCount);
+    
+    if (BasketSayisi == AtilmasiGerekenTop)
     {
-        Sesler[2].Play();
-        Paneller[2].SetActive(true);
-        if (ozellik != null)
-        {
-            ozellik.SetActive(false);
-        }
-        Top.transform.position = new Vector3(0, 0, -0.119999997f);
-        Top.SetActive(false);
-        PlayerBase.transform.position = new Vector3(0f, -2.78f, 0f);
         isGameStart = false;
-        if (isGameStart == false)
-        {
-            PlayerBase.SetActive(false);
-            LevelPanel.SetActive(false);
-            Time.timeScale = 0;
-        }
+        Kazandin();
     }
+
+    if (randomCount > 2 && PlayerPrefs.GetInt("Level") > 2)
+    {
+        OzellikOlussun();
+    }
+}
+
+    public void Kaybettin()
+{
+    Sesler[2].Play();
+    Paneller[2].SetActive(true);
+    
+    if (ozellik != null)
+    {
+        ozellik.SetActive(false);
+    }
+    
+    Top.transform.position = new Vector3(0, 0, -0.119999997f);
+    Top.SetActive(false);
+    
+    PlayerBase.transform.position = new Vector3(0f, -2.78f, 0f);
+    isGameStart = false;
+    
+    PlayerBase.SetActive(false);
+    LevelPanel.SetActive(false);
+    Time.timeScale = 0;
+}
+
     void Kazandin()
+{
+    Sesler[3].Play();
+    
+    int currentLevel = PlayerPrefs.GetInt("Level");
+    PlayerPrefs.SetInt("Level", currentLevel + 1);
+    
+    Paneller[1].SetActive(true);
+    
+    if (ozellik != null)
     {
-        Sesler[3].Play();
-        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
-        Paneller[1].SetActive(true);
-        if (ozellik != null)
-        {
-            ozellik.SetActive(false);
-        }
-        if (isGameStart == false)
-        {
-            LevelPanel.SetActive(false);
-            PlayerBase.SetActive(false);
-            Time.timeScale = 0;
-        }
+        ozellik.SetActive(false);
     }
+    
+    LevelPanel.SetActive(false);
+    PlayerBase.SetActive(false);
+    Time.timeScale = 0;
+}
 
 
-    public void PotaBuyut(Vector3 Poz)
-    {
-        Efektler[1].transform.position = Poz;
-        Efektler[1].gameObject.SetActive(true);
-        Sesler[0].Play();
-        Pota.transform.localScale = growHoopScale;
-        timeLeftHoopGrow = true;
-    }
-    public void TopKucult(Vector3 Pos)
-    {
-        Efektler[1].transform.position = Pos;
-        Efektler[1].gameObject.SetActive(true);
-        Sesler[0].Play();
-        Top.transform.localScale = smallBallScale;
-        timeLeftBallSmall = true;
-    }
-    public void PlatformKucult(Vector3 Pos)
-    {
-        Efektler[1].transform.position = Pos;
-        Efektler[1].gameObject.SetActive(true);
-        Sesler[0].Play();
-        Player.transform.localScale = new Vector3(.5f, Player.transform.localScale.y, Player.transform.localScale.z);
-        timeLeftPlatformSmall = true;
-    }
+
+   public void PotaBuyut(Vector3 Poz)
+{
+    SetEfektlerPosition(Poz);
+    Efektler[1].gameObject.SetActive(true);
+    Sesler[0].Play();
+    Pota.transform.localScale = growHoopScale;
+    timeLeftHoopGrow = true;
+}
+
+public void TopKucult(Vector3 Pos)
+{
+    SetEfektlerPosition(Pos);
+    Efektler[1].gameObject.SetActive(true);
+    Sesler[0].Play();
+    Top.transform.localScale = smallBallScale;
+    timeLeftBallSmall = true;
+}
+
+public void PlatformKucult(Vector3 Pos)
+{
+    SetEfektlerPosition(Pos);
+    Efektler[1].gameObject.SetActive(true);
+    Sesler[0].Play();
+    Player.transform.localScale = new Vector3(0.5f, Player.transform.localScale.y, Player.transform.localScale.z);
+    timeLeftPlatformSmall = true;
+}
+
+private void SetEfektlerPosition(Vector3 position)
+{
+    Efektler[1].transform.position = position;
+}
+
     void ChangeHoopPosition()
     {
         Sesler[0].Play();

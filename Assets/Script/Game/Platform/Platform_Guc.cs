@@ -41,5 +41,7 @@ public class Platform_Guc : MonoBehaviour
 
             topRigidbody.velocity = topRigidbody.velocity.magnitude * hareketYonu;
         }
+
+       
     }
 }
