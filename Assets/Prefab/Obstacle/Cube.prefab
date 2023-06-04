@@ -112,9 +112,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 0
-  redMaterial: {fileID: 2100000, guid: aca05c3efebeb3148b7ee936cf6cbae1, type: 2}
-  blueMaterial: {fileID: 2100000, guid: c0ef9f2774dae604b817e1977d6e228e, type: 2}
-  greenMaterial: {fileID: 2100000, guid: 3b65d383d7f147a4c8b93509741a86cb, type: 2}
-  purpleMaterial: {fileID: 2100000, guid: 9f4790eba39775544b2c12538c96bfae, type: 2}
-  whiteMaterial: {fileID: 2100000, guid: 2f22055116f3fc24ba7b41639dbb7950, type: 2}
+  redMaterial: {fileID: 2100000, guid: f3b02a242fbd38042b34b03a75cd5fd7, type: 2}
+  blueMaterial: {fileID: 2100000, guid: 3e047e43f7a851c478bbd49b5575dfb4, type: 2}
+  greenMaterial: {fileID: 2100000, guid: f7968f2fbb20e9143934647db7409914, type: 2}
+  purpleMaterial: {fileID: 2100000, guid: 522d9494050d84a4b8fb4251720036e6, type: 2}
+  whiteMaterial: {fileID: 2100000, guid: 1110ebd576e171042bf5d939b07e3a83, type: 2}
   UygulanacakGuc: 0.03
