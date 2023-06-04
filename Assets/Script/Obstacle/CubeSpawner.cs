@@ -6,7 +6,7 @@ public class CubeSpawner : MonoBehaviour
 
     private void Start()
     {   
-        //PlayerPrefs.SetInt("Level",33);
+        PlayerPrefs.SetInt("Level",150);
         int currentLevel = PlayerPrefs.GetInt("Level");
 
         int cubeCount = currentLevel / 10;

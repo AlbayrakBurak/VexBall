@@ -300,7 +300,7 @@ private void SetEfektlerPosition(Vector3 position)
             Pota.SetActive(false);
             StartCoroutine(DelayedHoopPositionChange());
         }
-        if(PlayerPrefs.GetInt("Level")>150){
+        if(PlayerPrefs.GetInt("Level")>=150){
             potaObstacle =Pota.gameObject.transform.position;
         Instantiate(cubePrefab,potaObstacle,Quaternion.identity); //create the cube last pota position when pota changed position 
         }
