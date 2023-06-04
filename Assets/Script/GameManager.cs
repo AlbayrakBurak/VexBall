@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject Top;
     public GameObject cubePrefab; // Küp prefabı
 
-    public Vector3 aa;
+    public Vector3 potaObstacle;
 
     [SerializeField] private GameObject[] OzellikOlusmaNoktalari;
     [SerializeField] GameObject[] ozellikler;
@@ -301,8 +301,8 @@ private void SetEfektlerPosition(Vector3 position)
             StartCoroutine(DelayedHoopPositionChange());
         }
         if(PlayerPrefs.GetInt("Level")>150){
-            aa =Pota.gameObject.transform.position;
-        Instantiate(cubePrefab,aa,Quaternion.identity); //create the cube last pota position when pota changed position 
+            potaObstacle =Pota.gameObject.transform.position;
+        Instantiate(cubePrefab,potaObstacle,Quaternion.identity); //create the cube last pota position when pota changed position 
         }
     }
 
