@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float PlatformSpeed = 15f;
     [SerializeField] private GameObject Pota;
     public GameObject Top;
+    public GameObject cubePrefab; // Küp prefabı
 
-
+    public Vector3 aa;
 
     [SerializeField] private GameObject[] OzellikOlusmaNoktalari;
     [SerializeField] GameObject[] ozellikler;
@@ -98,6 +99,8 @@ public class GameManager : MonoBehaviour
 
             }
         }
+         
+        
     }
 
     void OzellikOlussun()
@@ -286,7 +289,7 @@ private void SetEfektlerPosition(Vector3 position)
     void ChangeHoopPosition()
     {
         Sesler[0].Play();
-
+        
         if (BasketSayisi == 0)
         {
             Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(2f, 3.5f), Pota.transform.position.z);
@@ -296,6 +299,10 @@ private void SetEfektlerPosition(Vector3 position)
         {
             Pota.SetActive(false);
             StartCoroutine(DelayedHoopPositionChange());
+        }
+        if(PlayerPrefs.GetInt("Level")>150){
+            aa =Pota.gameObject.transform.position;
+        Instantiate(cubePrefab,aa,Quaternion.identity); //create the cube last pota position when pota changed position 
         }
     }
 

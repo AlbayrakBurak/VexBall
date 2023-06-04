@@ -3173,6 +3173,8 @@ MonoBehaviour:
   PlatformSpeed: 15
   Pota: {fileID: 663435403}
   Top: {fileID: 5788835110680146369}
+  cubePrefab: {fileID: 6188818849241936628, guid: fbdcbb51cb00a424ab8124a8115f3ff3, type: 3}
+  aa: {x: 0, y: 0, z: 0}
   OzellikOlusmaNoktalari:
   - {fileID: 1390377377}
   - {fileID: 101556321}
@@ -3718,9 +3720,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 6188818849241936628, guid: fbdcbb51cb00a424ab8124a8115f3ff3, type: 3}
-  minPosX: -1.75
-  maxPosX: 1.75
-  spacing: 1.25
+  _Pota: {fileID: 663435403}
+  aa: {x: 0, y: 0, z: 0}
 --- !u!1 &1152747160
 GameObject:
   m_ObjectHideFlags: 0
@@ -3867,7 +3868,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222924714}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -4793,7 +4794,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452610503}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -4876,7 +4877,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453207801}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -7829,7 +7830,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964803574}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
