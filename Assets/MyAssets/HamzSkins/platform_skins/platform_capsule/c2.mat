@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: skin_4
+  m_Name: c2
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
   - _EMISSION
@@ -38,13 +38,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: af0012f56d185cf4d83be93147d2f9b7, type: 3}
-        m_Scale: {x: 0.82, y: 1}
-        m_Offset: {x: 0.11, y: 0}
+        m_Texture: {fileID: 2800000, guid: 34f9969c89da8134192330b7caf67443, type: 3}
+        m_Scale: {x: 0.26, y: 0.35}
+        m_Offset: {x: 0.03, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 0.82, y: 1}
-        m_Offset: {x: 0.11, y: 0}
+        m_Scale: {x: 0.26, y: 0.35}
+        m_Offset: {x: 0.03, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -77,5 +77,5 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
-    - _EmissionColor: {r: 3.2111173, g: 3.2111173, b: 3.2111173, a: 1}
+    - _EmissionColor: {r: 1.5110947, g: 2.9199264, b: 3.372127, a: 1}
   m_BuildTextureStacks: []
