@@ -6,12 +6,12 @@ public class CubeSpawner : MonoBehaviour
 
     private void Start()
     {   
-        PlayerPrefs.SetInt("Level",150);
+        
         int currentLevel = PlayerPrefs.GetInt("Level");
 
         int cubeCount = currentLevel / 10;
         if(cubeCount>=10){
-            cubeCount=9;
+            cubeCount=10;
         }
         SpawnCubes(cubeCount);
     }
@@ -32,7 +32,7 @@ public class CubeSpawner : MonoBehaviour
         // Küpün x pozisyonunu belirle
         float xPos = startX + i * cubePrefab.transform.localScale.x;
       //  float xRandom = Random.Range(0,0.50f);
-        cube.transform.position = new Vector3(xPos, 0f, 0f);
+        cube.transform.position = new Vector3(xPos, 0.5f, 0f);
     }
 }
 

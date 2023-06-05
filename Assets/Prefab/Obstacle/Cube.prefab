@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -7864769969070232922}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: ObstacleCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,9 +112,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 0
-  redMaterial: {fileID: 2100000, guid: f3b02a242fbd38042b34b03a75cd5fd7, type: 2}
-  blueMaterial: {fileID: 2100000, guid: 3e047e43f7a851c478bbd49b5575dfb4, type: 2}
-  greenMaterial: {fileID: 2100000, guid: f7968f2fbb20e9143934647db7409914, type: 2}
-  purpleMaterial: {fileID: 2100000, guid: 522d9494050d84a4b8fb4251720036e6, type: 2}
-  whiteMaterial: {fileID: 2100000, guid: 1110ebd576e171042bf5d939b07e3a83, type: 2}
+  health5: {fileID: 2100000, guid: f3b02a242fbd38042b34b03a75cd5fd7, type: 2}
+  health4: {fileID: 2100000, guid: 3e047e43f7a851c478bbd49b5575dfb4, type: 2}
+  health3: {fileID: 2100000, guid: f7968f2fbb20e9143934647db7409914, type: 2}
+  health2: {fileID: 2100000, guid: 522d9494050d84a4b8fb4251720036e6, type: 2}
+  health1: {fileID: 2100000, guid: 1110ebd576e171042bf5d939b07e3a83, type: 2}
   UygulanacakGuc: 0.03

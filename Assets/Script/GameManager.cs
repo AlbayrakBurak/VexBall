@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     float ParmakPozX;
     void Start()
     {
-
+        PlayerPrefs.SetInt("Level",20);
         Time.timeScale = 1;
 
         isGameStart = true;
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
                 float screenMinX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 10)).x;
                 float screenMaxX = Camera.main.ScreenToWorldPoint(new Vector3(screenWidth, 0, 10)).x;
 
-                float margin = 0.5f;
+                float margin = 0.125f;
                 float minX, maxX;
 
                 if (Player.transform.localScale.x <= 0.5f)
@@ -230,6 +230,7 @@ public class GameManager : MonoBehaviour
     
     PlayerBase.SetActive(false);
     LevelPanel.SetActive(false);
+    DestroyObstacleCube();
     Time.timeScale = 0;
 }
 
@@ -246,13 +247,24 @@ public class GameManager : MonoBehaviour
     {
         ozellik.SetActive(false);
     }
-    
+     Top.SetActive(false);
     LevelPanel.SetActive(false);
     PlayerBase.SetActive(false);
+    DestroyObstacleCube();
+
     Time.timeScale = 0;
 }
+    private string tagName = "ObstacleCube";
+    public void DestroyObstacleCube(){
+        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tagName);
 
+        // Her bir objeyi yok et
+        foreach (GameObject taggedObject in taggedObjects)
+        {
+            Destroy(taggedObject);
+        }
 
+    }
 
    public void PotaBuyut(Vector3 Poz)
 {
