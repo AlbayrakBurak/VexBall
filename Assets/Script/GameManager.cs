@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour
     float ParmakPozX;
     void Start()
     {
-        PlayerPrefs.SetInt("Level",20);
+        //PlayerPrefs.SetInt("Level",150);
+
         Time.timeScale = 1;
 
         isGameStart = true;
