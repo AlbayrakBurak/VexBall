@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -223,15 +223,13 @@ public class GameManager : MonoBehaviour
         ozellik.SetActive(false);
     }
     
-    Top.transform.position = new Vector3(0, 0, -0.119999997f);
+    Top.transform.position = new Vector3(0, -1.5f, -0.119999997f);
     Top.SetActive(false);
     
     PlayerBase.transform.position = new Vector3(0f, -2.78f, 0f);
     isGameStart = false;
-    
     PlayerBase.SetActive(false);
     LevelPanel.SetActive(false);
-    DestroyObstacleCube();
     Time.timeScale = 0;
 }
 
@@ -251,21 +249,8 @@ public class GameManager : MonoBehaviour
      Top.SetActive(false);
     LevelPanel.SetActive(false);
     PlayerBase.SetActive(false);
-    DestroyObstacleCube();
-
     Time.timeScale = 0;
 }
-    private string tagName = "ObstacleCube";
-    public void DestroyObstacleCube(){
-        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag(tagName);
-
-        // Her bir objeyi yok et
-        foreach (GameObject taggedObject in taggedObjects)
-        {
-            Destroy(taggedObject);
-        }
-
-    }
 
    public void PotaBuyut(Vector3 Poz)
 {
