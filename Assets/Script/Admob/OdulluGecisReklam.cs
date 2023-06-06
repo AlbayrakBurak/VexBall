@@ -7,26 +7,27 @@ using TMPro;
 
 public class OdulluGecisReklam : MonoBehaviour
 {
-
+    // Reklam birim kimliklerini burada tanımlayın
 #if UNITY_EDITOR
-    string _adUnitID = "ca-app-pub-3940256099942544/5354046379";
+    string adUnitID = "ca-app-pub-3940256099942544/5354046379";
 #elif UNITY_IPHONE
-        string _adUnitID = "ca-app-pub-3940256099942544/6978759866";
+    string adUnitID = "ca-app-pub-3940256099942544/6978759866";
 #else
-        string _adUnitID = "ca-app-pub-7605629714512840/2903734358";
+    string adUnitID = "ca-app-pub-7605629714512840/2903734358";
 #endif
 
-    RewardedInterstitialAd _OdulluGecisReklam;
-    public Button RewardContinueButton;
-    public GameObject FailPanel;
-    public GameObject LevelPanel;
-    public GameObject PlayerBase;
-    public TextMeshProUGUI Count;
-    public GameObject CountPanel;
-    public GameObject Top;
-    public float count=4f;
-    public bool CountDownActive=false;
-    GameManager _gameManager=new GameManager();
+    RewardedInterstitialAd odulluGecisReklam;
+    public Button rewardContinueButton;
+    public GameObject failPanel;
+    public GameObject levelPanel;
+    public GameObject playerBase;
+    public TextMeshProUGUI countText;
+    public GameObject countPanel;
+    public GameObject top;
+    private float count = 4f;
+    private bool countDownActive = false;
+    public TextMeshProUGUI internetConnectionPopupText ;
+
 
     void Start()
     {
@@ -35,129 +36,138 @@ public class OdulluGecisReklam : MonoBehaviour
 
         });
         OdulluGecisReklamOlustur();
+        rewardContinueButton.onClick.AddListener(OdulluGecisReklamGoster);
     }
 
     void OdulluGecisReklamOlustur()
     {
-        if (_OdulluGecisReklam != null)
+        if (odulluGecisReklam != null)
         {
-            _OdulluGecisReklam.Destroy();
-            _OdulluGecisReklam = null;
+            odulluGecisReklam.Destroy();
+            odulluGecisReklam = null;
         }
 
-        var _AdRequest = new AdRequest.Builder().Build();
+        var adRequest = new AdRequest.Builder().Build();
 
-        RewardedInterstitialAd.Load(_adUnitID, _AdRequest,
-            (RewardedInterstitialAd Ad, LoadAdError error) =>
+        RewardedInterstitialAd.Load(adUnitID, adRequest, (RewardedInterstitialAd ad, LoadAdError error) =>
+        {
+            if (error != null || ad == null)
             {
-                if (error != null || Ad == null)
-                {
+                Debug.LogError("Ödüllü Geçiş reklamı yüklenirken hata oluştu. HATA: " + error);
+                return;
+            }
 
-                    Debug.LogError("�d�ll� Geci� reklam y�klenirken hata olu�tu HATA : " + error);
-                    return;
-                }
+            odulluGecisReklam = ad;
+        });
 
-                _OdulluGecisReklam = Ad;
-
-            });
-
-        ReklamOlaylariniDinle(_OdulluGecisReklam);
+        ReklamOlaylariniDinle(odulluGecisReklam);
     }
+
     void ReklamOlaylariniDinle(RewardedInterstitialAd ad)
     {
         ad.OnAdPaid += (AdValue adValue) =>
         {
-            Debug.Log(string.Format("�cretli ge�i� reklam� {0} {1}.",
-              adValue.Value,
-                adValue.CurrencyCode));
+            Debug.Log(string.Format("Ücretli geçiş reklamı {0} {1} ile ödendi.", adValue.Value, adValue.CurrencyCode));
         };
 
         ad.OnAdImpressionRecorded += () =>
         {
-            Debug.Log("�d�ll� Ge�i� reklam� bir g�sterim kaydetti.");
+            Debug.Log("Ödüllü Geçiş reklamı bir görüntüleme kaydetti.");
         };
 
         ad.OnAdClicked += () =>
         {
-            Debug.Log("�d�ll� Ge�i� reklam� t�kland�.");
+            Debug.Log("Ödüllü Geçiş reklamı tıklandı.");
         };
 
         ad.OnAdFullScreenContentOpened += () =>
         {
-            Debug.Log("�d�ll� Ge�i� reklam� a��ld�.");
+            Debug.Log("Ödüllü Geçiş reklamı açıldı.");
         };
 
         ad.OnAdFullScreenContentClosed += () =>
         {
-            Debug.Log("�d�ll� Ge�i� reklam� kapat�ld�.");
+            Debug.Log("Ödüllü Geçiş reklamı kapatıldı.");
             OdulluGecisReklamOlustur();
         };
 
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
-            Debug.Log("Ge�i� reklam� tam ekran a��lamad�. HATA : " + error);
+            Debug.Log("Geçiş reklamı tam ekran açılamadı. HATA: " + error);
             OdulluGecisReklamOlustur();
         };
     }
+    private bool isCountdownActive=false;
     public void OdulluGecisReklamGoster()
     {
-        const string OdulMesaji = "�d�ll� Ge�i� Kazan�ld�. �r�n : {0}, De�er {1}";
-
-        if (_OdulluGecisReklam != null && _OdulluGecisReklam.CanShowAd())
+        const string odulMesaji = "Ödüllü Geçiş Kazanıldı. Ürün: {0}, Değer: {1}";
+        if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-            _OdulluGecisReklam.Show((Reward reward) =>
+
+        if  (!isCountdownActive && odulluGecisReklam != null && odulluGecisReklam.CanShowAd())
+        {
+            odulluGecisReklam.Show((Reward reward) =>
             {
-                
-                Debug.Log(string.Format(OdulMesaji, reward.Type, reward.Amount));
-                 RewardContinueButton.interactable=false;
-                
-                CountDownActive=true;
-                Top.GetComponent<Rigidbody>().isKinematic=true;
+                Debug.Log(string.Format(odulMesaji, reward.Type, reward.Amount));
+                rewardContinueButton.interactable = false;
+                countDownActive = true;
+                top.GetComponent<Rigidbody>().isKinematic = true;
             });
         }
         else
         {
-            Debug.Log("�d�ll� reklam hen�z haz�r de�il");
+            Debug.Log("Ödüllü reklam henüz hazır değil.");
+        }
+    }
+    else
+        {
+
+        
+            ShowInternetConnectionPopup();
+        }
+    }
+
+    void Update()
+    {
+        
+        if (countDownActive)
+        {
+            failPanel.SetActive(false);
+            levelPanel.SetActive(true);
+            playerBase.SetActive(true);
+            top.SetActive(true);
+            Time.timeScale = 1f;
+            count -= Time.deltaTime;
+
+            int countInt = (int)count;
+            countPanel.SetActive(true);
+            countText.text = countInt.ToString("D1");
+            Debug.Log("Tüm işlemler bitti: " + count);
         }
 
-    }
-    void ReklamiOldur()
-    {
-        _OdulluGecisReklam.Destroy();
-    }
-        void Update(){
-        if(CountDownActive){
-        FailPanel.SetActive(false); 
-                LevelPanel.SetActive(true);
-                PlayerBase.SetActive(true);
-                Top.SetActive(true);
-                Time.timeScale=1f;  
-                count-=Time.deltaTime;
-                
-        int _count=(int)count;
-        CountPanel.SetActive(true);
-        Count.text=_count.ToString("D1");
-        Debug.Log("TUM ISLEMLER BİTTİ"+count); 
-        } 
-        if(count<1){ 
-            CountDownActive=false;
-            Debug.Log("ife Girdi");
+        if (count < 1)
+        {
+            countDownActive = false;
+            Debug.Log("If bloğuna girdi.");
             ContinueGame();
-                 
-           
-              
+        }
     }
 
+    public void ContinueGame()
+    {
+        countPanel.SetActive(false);
+        count = 4f;
+        Debug.Log("4f bloğuna girdi.");
+        top.GetComponent<Rigidbody>().isKinematic = false;
+    }
+    
+     void ShowInternetConnectionPopup()
+    {
+        // İnternet bağlantısı uyarı popup'ını göster
+          string message = "Check your internet connection!";
+        // Burada istediğiniz şekilde bir popup gösterimi sağlayabilirsiniz.
+
+         internetConnectionPopupText.text = message;
     }
 
-    public void ContinueGame(){
-  
-
-        CountPanel.SetActive(false);
-        
-            count=4f;
-            Debug.Log("4f Girdi");
-            Top.GetComponent<Rigidbody>().isKinematic=false;       
-
-    }
 }

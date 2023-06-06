@@ -60,6 +60,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] StartPanel;
     [SerializeField] private TMP_Text Count;
     [SerializeField] public GameObject FailPanel;
+    [SerializeField] private bool canStart;  // Oyunun başlamasına izin veren bayrak
+    [SerializeField] private bool gameStarted;  // Oyunun başladığını gösteren bayrak
+    [SerializeField] public GameObject swipeToStartPanel;  // Swipe to start paneli
+    [SerializeField] private bool isGameStarted = false;
     [Header("---ADMOB")]
     public GameObject RewardContinueButton;
     [SerializeField] private GameObject Admob;
@@ -68,40 +72,32 @@ public class GameManager : MonoBehaviour
     float ParmakPozX;
     void Start()
     {
-        //PlayerPrefs.SetInt("Level",150);
-
+        canStart = false;
+        gameStarted = false;
         Time.timeScale = 1;
 
         isGameStart = true;
 
         ChangeHoopPosition();
 
-        if (PlayerPrefs.GetInt("Level") == 0)
-        {
-            PlayerPrefs.SetInt("Level", 1);
-        }
-        LevelAd.text = "LEVEL : " + PlayerPrefs.GetInt("Level");
+        int currentLevel = PlayerPrefs.GetInt("Level", 1);
+        LevelAd.text = "LEVEL : " + currentLevel;
 
-        if (PlayerPrefs.GetInt("Level") < 3)
+        if (currentLevel < 3)
         {
-            // Pota.transform.localScale=new Vector3(90f, 90f, 90f);
-            AtilmasiGerekenTop = PlayerPrefs.GetInt("Level");
-            for (int i = 0; i < PlayerPrefs.GetInt("Level"); i++)
+            AtilmasiGerekenTop = currentLevel;
+            for (int i = 0; i < currentLevel; i++)
             {
                 GorevGorselleri[i].gameObject.SetActive(true);
             }
         }
-
         else
         {
             for (int i = 0; i < AtilmasiGerekenTop; i++)
             {
                 GorevGorselleri[i].gameObject.SetActive(true);
-
             }
         }
-         
-        
     }
 
     void OzellikOlussun()
@@ -126,14 +122,54 @@ public class GameManager : MonoBehaviour
     }
 
     void Update()
+{
+    if (Time.timeScale == 0)
     {
-        if (Time.timeScale == 0)
-        {
-            return;
-        }
+        return;
+    }
 
+    if (!isGameStarted)
+    {   
+        
+
+        HandleSwipeToStart();
+    }
+    else
+    {
+        HandleGameplay();
+       
+    }
+}
+
+    void HandleSwipeToStart()
+{
+    if (!isGameStarted && Input.touchCount > 0)
+    {
+        Touch touch = Input.GetTouch(0);
+
+        if (touch.phase == TouchPhase.Began)
+        {
+            swipeToStartPanel.SetActive(false);
+            StartGame();
+        }
+    }
+    else{
+        Top.GetComponent<Rigidbody>().isKinematic = true;
+    }
+}
+
+    void StartGame()
+{
+    isGameStarted = true;
+    swipeToStartPanel.SetActive(false);
+     Top.GetComponent<Rigidbody>().isKinematic = false;
+}
+
+    void HandleGameplay()
+    {
         if (Input.touchCount > 0)
         {
+            // Oyun devam ederken swipe işlemlerini gerçekleştir
             Touch touch = Input.GetTouch(0);
             Vector3 touchPosition = Camera.main.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 10));
 
@@ -172,6 +208,7 @@ public class GameManager : MonoBehaviour
         UpdateTimer(ref timeLeftPlatform, ref timeLeftPlatformSmall, Player, defaultPlayerScale);
     }
 
+
     void UpdateTimer(ref float timeLeft, ref bool isTimerRunning, GameObject targetObject, Vector3 defaultScale)
     {
         if (isTimerRunning)
@@ -185,109 +222,109 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   public void Basket(Vector3 poz)
-{
-     if (Application.platform == RuntimePlatform.Android)
-    {   
-        Handheld.Vibrate();
-    }
-    BasketSayisi++;
-    GorevGorselleri[BasketSayisi - 1].sprite = AtilanBasketSprite;
-    Efektler[0].transform.position = poz;
-    Efektler[0].gameObject.SetActive(true);
-    Sesler[1].Play();
-    ChangeHoopPosition();
-    
-    int randomCount = Random.Range(0, 5);
-    Debug.Log(randomCount);
-    
-    if (BasketSayisi == AtilmasiGerekenTop)
+    public void Basket(Vector3 poz)
     {
-        isGameStart = false;
-        Kazandin();
-    }
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            Handheld.Vibrate();
+        }
+        BasketSayisi++;
+        GorevGorselleri[BasketSayisi - 1].sprite = AtilanBasketSprite;
+        Efektler[0].transform.position = poz;
+        Efektler[0].gameObject.SetActive(true);
+        Sesler[1].Play();
+        ChangeHoopPosition();
 
-    if (randomCount > 2 && PlayerPrefs.GetInt("Level") > 2)
-    {
-        OzellikOlussun();
+        int randomCount = Random.Range(0, 5);
+        Debug.Log(randomCount);
+
+        if (BasketSayisi == AtilmasiGerekenTop)
+        {
+            isGameStart = false;
+            Kazandin();
+        }
+
+        if (randomCount > 2 && PlayerPrefs.GetInt("Level") > 2)
+        {
+            OzellikOlussun();
+        }
     }
-}
 
     public void Kaybettin()
-{
-    Sesler[2].Play();
-    Paneller[2].SetActive(true);
-    
-    if (ozellik != null)
     {
-        ozellik.SetActive(false);
+        Sesler[2].Play();
+        Paneller[2].SetActive(true);
+
+        if (ozellik != null)
+        {
+            ozellik.SetActive(false);
+        }
+
+        Top.transform.position = new Vector3(0, -1.5f, -0.119999997f);
+        Top.SetActive(false);
+
+        PlayerBase.transform.position = new Vector3(0f, -2.78f, 0f);
+        isGameStart = false;
+        PlayerBase.SetActive(false);
+        LevelPanel.SetActive(false);
+        Time.timeScale = 0;
     }
-    
-    Top.transform.position = new Vector3(0, -1.5f, -0.119999997f);
-    Top.SetActive(false);
-    
-    PlayerBase.transform.position = new Vector3(0f, -2.78f, 0f);
-    isGameStart = false;
-    PlayerBase.SetActive(false);
-    LevelPanel.SetActive(false);
-    Time.timeScale = 0;
-}
 
     void Kazandin()
-{
-    Sesler[3].Play();
-    
-    int currentLevel = PlayerPrefs.GetInt("Level");
-    PlayerPrefs.SetInt("Level", currentLevel + 1);
-    
-    Paneller[1].SetActive(true);
-    
-    if (ozellik != null)
     {
-        ozellik.SetActive(false);
+        Sesler[3].Play();
+
+        int currentLevel = PlayerPrefs.GetInt("Level");
+        PlayerPrefs.SetInt("Level", currentLevel + 1);
+
+        Paneller[1].SetActive(true);
+
+        if (ozellik != null)
+        {
+            ozellik.SetActive(false);
+        }
+        Top.SetActive(false);
+        LevelPanel.SetActive(false);
+        PlayerBase.SetActive(false);
+        Time.timeScale = 0;
     }
-     Top.SetActive(false);
-    LevelPanel.SetActive(false);
-    PlayerBase.SetActive(false);
-    Time.timeScale = 0;
-}
 
-   public void PotaBuyut(Vector3 Poz)
-{
-    SetEfektlerPosition(Poz);
-    Efektler[1].gameObject.SetActive(true);
-    Sesler[0].Play();
-    Pota.transform.localScale = growHoopScale;
-    timeLeftHoopGrow = true;
-}
+    public void PotaBuyut(Vector3 Poz)
+    {
+        SetEfektlerPosition(Poz);
+        Efektler[1].gameObject.SetActive(true);
+        Sesler[0].Play();
+        Pota.transform.localScale = growHoopScale;
+        timeLeftHoopGrow = true;
+    }
 
-public void TopKucult(Vector3 Pos)
-{
-    SetEfektlerPosition(Pos);
-    Efektler[1].gameObject.SetActive(true);
-    Sesler[0].Play();
-    Top.transform.localScale = smallBallScale;
-    timeLeftBallSmall = true;
-}
+    public void TopKucult(Vector3 Pos)
+    {
+        SetEfektlerPosition(Pos);
+        Efektler[1].gameObject.SetActive(true);
+        Sesler[0].Play();
+        Top.transform.localScale = smallBallScale;
+        timeLeftBallSmall = true;
+    }
 
-public void PlatformKucult(Vector3 Pos)
-{
-    SetEfektlerPosition(Pos);
-    Efektler[1].gameObject.SetActive(true);
-    Sesler[0].Play();
-    Player.transform.localScale = new Vector3(0.5f, Player.transform.localScale.y, Player.transform.localScale.z);
-    timeLeftPlatformSmall = true;
-}
+    public void PlatformKucult(Vector3 Pos)
+    {
+        SetEfektlerPosition(Pos);
+        Efektler[1].gameObject.SetActive(true);
+        Sesler[0].Play();
+        Player.transform.localScale = new Vector3(0.5f, Player.transform.localScale.y, Player.transform.localScale.z);
+        timeLeftPlatformSmall = true;
+    }
 
-private void SetEfektlerPosition(Vector3 position)
-{
-    Efektler[1].transform.position = position;
-}
+    private void SetEfektlerPosition(Vector3 position)
+    {
+        Efektler[1].transform.position = position;
+    }
 
     void ChangeHoopPosition()
     {
         Sesler[0].Play();
-        
+
         if (BasketSayisi == 0)
         {
             Vector3 newPosition = new Vector3(Random.Range(-1.2f, 1.2f), Random.Range(2f, 3.5f), Pota.transform.position.z);
@@ -298,9 +335,10 @@ private void SetEfektlerPosition(Vector3 position)
             Pota.SetActive(false);
             StartCoroutine(DelayedHoopPositionChange());
         }
-        if(PlayerPrefs.GetInt("Level")>=150){
-            potaObstacle =Pota.gameObject.transform.position;
-        Instantiate(cubePrefab,potaObstacle,Quaternion.identity); //create the cube last pota position when pota changed position 
+        if (PlayerPrefs.GetInt("Level") >= 150)
+        {
+            potaObstacle = Pota.gameObject.transform.position;
+            Instantiate(cubePrefab, potaObstacle, Quaternion.identity); //create the cube last pota position when pota changed position 
         }
     }
 
