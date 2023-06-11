@@ -97,14 +97,14 @@ public class OdulluGecisReklam : MonoBehaviour
             OdulluGecisReklamOlustur();
         };
     }
-    private bool isCountdownActive=false;
+
     public void OdulluGecisReklamGoster()
     {
         const string odulMesaji = "Ödüllü Geçiş Kazanıldı. Ürün: {0}, Değer: {1}";
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
 
-        if  (!isCountdownActive && odulluGecisReklam != null && odulluGecisReklam.CanShowAd())
+        if (odulluGecisReklam != null && odulluGecisReklam.CanShowAd())
         {
             odulluGecisReklam.Show((Reward reward) =>
             {

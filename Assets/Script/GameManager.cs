@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     int BasketSayisi;
     float ParmakPozX;
     void Start()
-    {
+    {   
         canStart = false;
         gameStarted = false;
         Time.timeScale = 1;
@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
     }
 }
 
-    void HandleSwipeToStart()
+    public void HandleSwipeToStart()
 {
     if (!isGameStarted && Input.touchCount > 0)
     {
