@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("---LEVEL TEMEL OBJELERİ")]
     [SerializeField] public GameObject Player;
-    [SerializeField] private float PlatformSpeed = 15f;
+     public float PlatformSpeed = 25f;
     [SerializeField] private GameObject Pota;
     public GameObject Top;
     public GameObject cubePrefab; // Küp prefabı
@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("---Menu UI")]
+    public GameObject buttonPanel;
     [SerializeField] public bool isGameStart = true;
     [SerializeField] private GameObject LevelPanel;
     [SerializeField] private GameObject PlayerBase;
@@ -149,8 +150,16 @@ public class GameManager : MonoBehaviour
 
         if (touch.phase == TouchPhase.Began)
         {
-            swipeToStartPanel.SetActive(false);
-            StartGame();
+             RectTransform panelRect = buttonPanel.GetComponent<RectTransform>();
+            bool isTouchInsidePanel = RectTransformUtility.RectangleContainsScreenPoint(panelRect, touch.position);
+
+            if (!isTouchInsidePanel)
+            {
+                swipeToStartPanel.SetActive(false);
+
+                StartGame();
+            }
+
         }
     }
     else{
@@ -199,7 +208,7 @@ public class GameManager : MonoBehaviour
 
                 float clampedX = Mathf.Clamp(touchPosition.x - ParmakPozX, minX, maxX);
                 Vector3 newPosition = new Vector3(clampedX, Player.transform.position.y, Player.transform.position.z);
-                Player.transform.position = Vector3.Lerp(Player.transform.position, newPosition, PlatformSpeed);
+                Player.transform.position = Vector3.Lerp(Player.transform.position, newPosition, 2.0f);
             }
         }
 
@@ -376,7 +385,7 @@ public class GameManager : MonoBehaviour
 
                 break;
 
-            case "cikis":
+            case "Cikis":
                 Application.Quit();
                 break;
 

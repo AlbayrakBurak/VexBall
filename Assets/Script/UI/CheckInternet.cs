@@ -40,7 +40,8 @@ public class CheckInternet : MonoBehaviour
 
     IEnumerator CheckInternetConnection()
     {
-        UnityWebRequest request = new UnityWebRequest("http://google.com");
+        UnityWebRequest request = new UnityWebRequest("https://google.com");
+        
         yield return request.SendWebRequest();
 
         if(request.error != null)
