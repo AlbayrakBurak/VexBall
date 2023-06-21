@@ -324,11 +324,16 @@ public class GameManager : MonoBehaviour
         Player.transform.localScale = new Vector3(0.5f, Player.transform.localScale.y, Player.transform.localScale.z);
         timeLeftPlatformSmall = true;
     }
+    public void CustomizeScene()
+    {
+        SceneManager.LoadScene("CustomizeScene");
+    }
 
     private void SetEfektlerPosition(Vector3 position)
     {
         Efektler[1].transform.position = position;
     }
+
 
     void ChangeHoopPosition()
     {
