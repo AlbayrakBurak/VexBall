@@ -24,9 +24,9 @@ public class GecisReklami : MonoBehaviour
             
         });
         GecisReklamiOlustur();
-        int randomX = Random.Range(0,10);
+        int randomX = Random.Range(0,7);
         Debug.Log(randomX);
-        if(randomX>=8){
+        if(randomX>=4){
 
       
         GecisReklamiGoster();
