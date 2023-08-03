@@ -17,7 +17,7 @@ public class PanelController : MonoBehaviour
     // İlk butona tıklandığında çağrılacak fonksiyon
     public void BallButtonClicked()
     {
-        upperPanel.SetActive(false);
+     //   upperPanel.SetActive(false);
         BallPanel.SetActive(true);
         PlatformPanel.SetActive(false);
     }
@@ -25,7 +25,7 @@ public class PanelController : MonoBehaviour
     // İkinci butona tıklandığında çağrılacak fonksiyon
     public void PlatformButtonClicked()
     {
-        upperPanel.SetActive(false);
+       // upperPanel.SetActive(false);
         BallPanel.SetActive(false);
         PlatformPanel.SetActive(true);
     }
@@ -33,7 +33,7 @@ public class PanelController : MonoBehaviour
     // Geri butonuna tıklandığında çağrılacak fonksiyon
     public void OnBackButtonClicked()
     {
-        upperPanel.SetActive(true);
+        //upperPanel.SetActive(true);
         BallPanel.SetActive(false);
         PlatformPanel.SetActive(false);
     }
