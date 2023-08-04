@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballMaterial: {fileID: 2100000, guid: ec3315cb64f503142b802e3611757438, type: 2}
   trailMaterial: {fileID: 2100000, guid: ec3315cb64f503142b802e3611757438, type: 2}
-  currentBallCount: 10
+  currentBallCount: 0

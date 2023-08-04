@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelController : MonoBehaviour
 {
@@ -6,35 +7,43 @@ public class PanelController : MonoBehaviour
     public GameObject BallPanel; // İlk panelin referansı
     public GameObject PlatformPanel; // İkinci panelin referansı
 
+    // Diğer değişkenleriniz aynı
+
     private void Start()
     {
-        // Başlangıçta sadece üst panel görünür olacak
+        
+
+       
         upperPanel.SetActive(true);
-        BallPanel.SetActive(false);
+        BallPanel.SetActive(true);
         PlatformPanel.SetActive(false);
+
     }
 
+    // Diğer fonksiyonlarınız aynı
+
     // İlk butona tıklandığında çağrılacak fonksiyon
-    public void BallButtonClicked()
+    public void OpenBallPanel()
     {
-     //   upperPanel.SetActive(false);
+       
         BallPanel.SetActive(true);
         PlatformPanel.SetActive(false);
     }
 
     // İkinci butona tıklandığında çağrılacak fonksiyon
-    public void PlatformButtonClicked()
+    public void OpenPlatformPanel()
     {
-       // upperPanel.SetActive(false);
         BallPanel.SetActive(false);
         PlatformPanel.SetActive(true);
     }
 
     // Geri butonuna tıklandığında çağrılacak fonksiyon
-    public void OnBackButtonClicked()
+    public void BuyNoAds()
     {
-        //upperPanel.SetActive(true);
-        BallPanel.SetActive(false);
-        PlatformPanel.SetActive(false);
+       
+    }
+
+    public void BackToMenu(){
+        SceneManager.LoadScene("MainScene");
     }
 }

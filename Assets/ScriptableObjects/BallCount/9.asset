@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f429b02dbe8924b9499c8bfba6aa72, type: 3}
   m_Name: 9
   m_EditorClassIdentifier: 
-  currentBallCount: 0
   ballMaterial: {fileID: 2100000, guid: 38d057b96721c2045864a8273e95b43f, type: 2}
   trailMaterial: {fileID: 2100000, guid: 38d057b96721c2045864a8273e95b43f, type: 2}
+  currentBallCount: 0
