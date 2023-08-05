@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class OdulluGecisReklam : MonoBehaviour
+public class OdulluGecisReklamResume : MonoBehaviour
 {
     // Reklam birim kimliklerini burada tanımlayın
 #if UNITY_EDITOR
@@ -13,7 +13,7 @@ public class OdulluGecisReklam : MonoBehaviour
 #elif UNITY_IPHONE
     string adUnitID = "ca-app-pub-3940256099942544/6978759866";
 #else
-    string adUnitID = "ca-app-pub-7605629714512840/1781552892";
+    string adUnitID = "ca-app-pub-7605629714512840/3032768814";
 #endif
 
     RewardedInterstitialAd odulluGecisReklam;

@@ -11,6 +11,7 @@ TagManager:
   - RightCorner
   - LeftCorner
   - ObstacleCube
+  - AdManager
   layers:
   - Default
   - TransparentFX

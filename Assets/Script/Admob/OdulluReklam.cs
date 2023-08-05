@@ -17,7 +17,7 @@ public class OdulluReklam : MonoBehaviour
         string _adUnitID = "ca-app-pub-7605629714512840/3712838439";
 #endif
 
-
+    RewardedAd _OdulluReklam;
     public Button RewardContinueButton;
     public GameObject FailPanel;
     public GameObject LevelPanel;
@@ -28,7 +28,7 @@ public class OdulluReklam : MonoBehaviour
     public float count=4f;
     public bool CountDownActive=false;
     GameManager _gameManager=new GameManager();
-    RewardedAd _OdulluReklam;
+
 
     public void Start()
     {

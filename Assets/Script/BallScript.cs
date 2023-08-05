@@ -16,11 +16,14 @@ public class BallScript : MonoBehaviour
     public Material[] BallMaterials;
     public Material[] TrailMaterials;
 
+    private AdManager adManager;
+
     private void Awake()
     {
         ballRenderer = GameObject.FindGameObjectWithTag("Top").GetComponent<Renderer>(); // Topun Renderer bileşenine erişmek için GetComponent kullanın
         topTrailRenderer = GameObject.FindGameObjectWithTag("Top").GetComponent<TrailRenderer>(); 
         ballImage = GetComponent<Image>(); // Image referansını almak için GetComponent kullanın
+        adManager = GameObject.FindGameObjectWithTag("AdManager").GetComponent<AdManager>();
     }
 
     private void Start()
@@ -29,6 +32,8 @@ public class BallScript : MonoBehaviour
         CheckCompletion(); // Başlangıçta kontrol yapalım
         CheckAndSetDefaultMaterials(); // Önce kayıt var mı kontrol edelim, yoksa default materyalleri ayarlayalım
         LoadData(); // Kaydedilmiş verileri yükle
+        adManager.OdulluGecisReklamOlustur();
+
     }
 
     private void CheckAndSetDefaultMaterials()
@@ -40,6 +45,7 @@ public class BallScript : MonoBehaviour
             
             PlayerPrefs.SetInt("IsFirstTime", 0);
         }
+
     }
 
     private void LoadData()
@@ -48,7 +54,7 @@ public class BallScript : MonoBehaviour
 
 
         // Topların sayısını yükle
-        ballData.currentBallCount = PlayerPrefs.GetInt("CurrentBallCount_" + gameObject.name, 0);
+        ballData.currentBallCount = PlayerPrefs.GetInt("CurrentBallCount_" + gameObject.name,ballData.currentBallCount);
 
         // Daha önce seçilen topun ve trail'in materyallerini yükle
         string stringBallMat = PlayerPrefs.GetString("LastSelectedBall", "");
@@ -97,12 +103,25 @@ public class BallScript : MonoBehaviour
     public void OnBallButtonClick()
     {
         if (ballData.currentBallCount < maxBallCount)
-        {
-            ballData.currentBallCount++;
-            UpdateBallCountText();
-            SaveData(); // Top sayısını kaydet
-            CheckCompletion(); // Her tıklamada kontrol yapalım
-        }
+        {   
+            adManager.OdulluGecisReklamGoster((success) =>
+            { 
+                if (success)
+                {
+
+            // Reklam izlendi ve ödül alındı (HandleUserEarnedReward metodu çalışacak)
+                // Dolayısıyla, HandleUserEarnedReward metodu içinde top sayısı ve diğer işlemler zaten yapılacak
+                ballData.currentBallCount++;
+                UpdateBallCountText();
+                SaveData(); // Top sayısını kaydet
+                CheckCompletion(); // Her tıklamada kontrol yapalım
+            }
+            else{
+                 ballCountText.text = "No ads";
+            }
+        
+        });
+    } 
         else if (isComplete && ballData.currentBallCount >= maxBallCount)
         {
             ballRenderer.material = ballData.ballMaterial;
