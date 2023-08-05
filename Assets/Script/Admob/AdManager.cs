@@ -7,14 +7,14 @@ public class AdManager : MonoBehaviour
 {
     
 #if UNITY_EDITOR
-    string adUnitID = "ca-app-pub-3940256099942544/5354046379";
+    string adUnitID = "ca-app-pub-3940256099942544/5224354917";
 #elif UNITY_IPHONE
     string adUnitID = "ca-app-pub-3940256099942544/6978759866";
 #else
     string adUnitID = "ca-app-pub-7605629714512840/2946236383";
 #endif
 
-    RewardedInterstitialAd odulluGecisReklam;
+    RewardedAd ballSkinReward;
     public TextMeshProUGUI internetConnectionPopupText ;
     private Action<bool> adCompletionCallback;
     
@@ -32,15 +32,15 @@ public class AdManager : MonoBehaviour
 
     public void OdulluGecisReklamOlustur()
     {
-        if (odulluGecisReklam != null)
+        if (ballSkinReward != null)
         {
-            odulluGecisReklam.Destroy();
-            odulluGecisReklam = null;
+            ballSkinReward.Destroy();
+            ballSkinReward = null;
         }
 
         var adRequest = new AdRequest.Builder().Build();
 
-        RewardedInterstitialAd.Load(adUnitID, adRequest, (RewardedInterstitialAd ad, LoadAdError error) =>
+        RewardedAd.Load(adUnitID, adRequest, (RewardedAd ad, LoadAdError error) =>
         {
             if (error != null || ad == null)
             {
@@ -48,13 +48,13 @@ public class AdManager : MonoBehaviour
                 return;
             }
 
-            odulluGecisReklam = ad;
+            ballSkinReward = ad;
         });
 
-        ReklamOlaylariniDinle(odulluGecisReklam);
+        ReklamOlaylariniDinle(ballSkinReward);
     }
 
-    void ReklamOlaylariniDinle(RewardedInterstitialAd ad)
+    void ReklamOlaylariniDinle(RewardedAd ad)
     {
         ad.OnAdPaid += (AdValue adValue) =>
         {
@@ -94,11 +94,11 @@ public class AdManager : MonoBehaviour
         const string odulMesaji = "Ödüllü Geçiş Kazanıldı. Ürün: {0}, Değer: {1}";
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-            if (odulluGecisReklam != null && odulluGecisReklam.CanShowAd())
+            if (ballSkinReward != null && ballSkinReward.CanShowAd())
             {
                 // Reklam gösterildiğinde bu kod çalışacak
                 adCompletionCallback = callback;
-                odulluGecisReklam.Show((Reward reward) =>
+                ballSkinReward.Show((Reward reward) =>
                 {
                     Debug.Log(string.Format(odulMesaji, reward.Type, reward.Amount));
                     adCompletionCallback?.Invoke(true); // Reklam izlendi, callback'i başarıyla çağırın

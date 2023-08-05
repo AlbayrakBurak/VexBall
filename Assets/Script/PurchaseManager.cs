@@ -1,59 +1,113 @@
-// using UnityEngine;
-// using UnityEngine.Purchasing;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Purchasing;
 
-// public class PurchaseManager : MonoBehaviour, IStoreListener
-// {
-//     private static IStoreController storeController;
-//     private static IExtensionProvider storeExtensionProvider;
-//     private string productId = "your_product_id"; // Ürün ID'sini buraya girin
 
-//     void Start()
-//     {
-//         if (storeController == null)
-//         {
-//             InitializePurchasing();
-//         }
-//     }
+using UnityEngine.UI;
 
-//     private void InitializePurchasing()
-//     {
-//         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+public class PurchaseManager : MonoBehaviour, IStoreListener
+{
+    private static IStoreController s_StoreController;
+    private static IExtensionProvider s_ExtensionProvider;
 
-//         builder.AddProduct(productId, ProductType.Consumable); // Ürünü satın alabilir (consumable) olarak tanımlayın
+    private static string NoAds="noads";
+     private bool isAdsRemoved = false;
 
-//         UnityPurchasing.Initialize(this, builder);
-//     }
 
-//     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
-//     {
-//         storeController = controller;
-//         storeExtensionProvider = extensions;
-//     }
 
-//     public void OnInitializeFailed(InitializationFailureReason error)
-//     {
-//         // Initialization failed, handle the error if needed
-//     }
 
-//     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
-//     {
-//         // Purchase failed, handle the failure if needed
-//     }
 
-//     public void OnPurchaseComplete(Product product)
-//     {
-//         // Satın alma başarılı bir şekilde tamamlandı, gerekli işlemleri yapabilirsiniz
-//     }
 
-//     public void OnPurchaseButtonClick()
-//     {
-//         if (storeController != null)
-//         {
-//             Product product = storeController.products.WithID(productId);
-//             if (product != null && product.availableToPurchase)
-//             {
-//                 storeController.InitiatePurchase(product);
-//             }
-//         }
-//     }
-// }
+    void Start()
+    {
+        if (s_StoreController == null)
+        {
+            InitializePurchasing();
+        }
+    }
+
+    public void InitializePurchasing()
+    {
+        if (isInitialize())
+        {
+            return;
+        }
+        var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+
+        builder.AddProduct(NoAds, ProductType.Consumable);
+
+        UnityPurchasing.Initialize(this, builder);
+    }
+
+    
+    public void ProductBuy_NoAds(){
+        BuyProductID(NoAds);
+
+    }
+
+
+    void BuyProductID(string productId)
+    {
+        if (isInitialize())
+        {
+            Product product = s_StoreController.products.WithID(productId);
+            if (product != null && product.availableToPurchase)
+            {
+                s_StoreController.InitiatePurchase(product);
+                
+            }
+            else
+            {
+                Debug.Log("Error Buy");
+            }
+        }
+        else
+        {
+            Debug.Log("Not find product");
+        }
+    }
+    public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+    {
+        s_StoreController = controller;
+        s_ExtensionProvider = extensions;
+    }
+
+    public void OnInitializeFailed(InitializationFailureReason error)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnInitializeFailed(InitializationFailureReason error, string message)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
+    {
+       if (String.Equals(purchaseEvent.purchasedProduct.definition.id, NoAds, StringComparison.Ordinal))
+        {
+            // "No Ads" satın alındı, reklamları kaldırın veya etkinleştirilen bir özelliği işaretleyin.
+            isAdsRemoved = true;
+            PlayerPrefs.SetInt("NoAds",1);
+        }
+        return PurchaseProcessingResult.Complete;
+        
+    }
+
+    private bool isInitialize()
+    {
+        return s_StoreController != null && s_ExtensionProvider != null;
+    }
+    public bool IsAdsRemoved()
+    {
+        return isAdsRemoved;
+    }
+
+}

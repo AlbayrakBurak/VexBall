@@ -5,18 +5,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class OdulluGecisReklamResume : MonoBehaviour
+public class OdulluReklamResume : MonoBehaviour
 {
     // Reklam birim kimliklerini burada tanımlayın
 #if UNITY_EDITOR
-    string adUnitID = "ca-app-pub-3940256099942544/5354046379";
+    string adUnitID = "ca-app-pub-3940256099942544/5224354917";
 #elif UNITY_IPHONE
     string adUnitID = "ca-app-pub-3940256099942544/6978759866";
 #else
-    string adUnitID = "ca-app-pub-7605629714512840/3032768814";
+    string adUnitID = "ca-app-pub-7605629714512840/3536483075";
 #endif
 
-    RewardedInterstitialAd odulluGecisReklam;
+    RewardedAd odulluGecisReklam;
+
     public Button rewardContinueButton;
     public GameObject failPanel;
     public GameObject levelPanel;
@@ -35,11 +36,11 @@ public class OdulluGecisReklamResume : MonoBehaviour
         {
 
         });
-        OdulluGecisReklamOlustur();
-        rewardContinueButton.onClick.AddListener(OdulluGecisReklamGoster);
+        OdulluReklamOlustur();
+        rewardContinueButton.onClick.AddListener(OdulluReklamGoster);
     }
 
-    void OdulluGecisReklamOlustur()
+    void OdulluReklamOlustur()
     {
         if (odulluGecisReklam != null)
         {
@@ -49,7 +50,7 @@ public class OdulluGecisReklamResume : MonoBehaviour
 
         var adRequest = new AdRequest.Builder().Build();
 
-        RewardedInterstitialAd.Load(adUnitID, adRequest, (RewardedInterstitialAd ad, LoadAdError error) =>
+        RewardedAd.Load(adUnitID, adRequest, (RewardedAd ad, LoadAdError error) =>
         {
             if (error != null || ad == null)
             {
@@ -57,13 +58,13 @@ public class OdulluGecisReklamResume : MonoBehaviour
                 return;
             }
 
-            odulluGecisReklam = ad;
+            odulluGecisReklam = ad; 
         });
 
         ReklamOlaylariniDinle(odulluGecisReklam);
     }
 
-    void ReklamOlaylariniDinle(RewardedInterstitialAd ad)
+    void ReklamOlaylariniDinle(RewardedAd ad)
     {
         ad.OnAdPaid += (AdValue adValue) =>
         {
@@ -88,17 +89,17 @@ public class OdulluGecisReklamResume : MonoBehaviour
         ad.OnAdFullScreenContentClosed += () =>
         {
             Debug.Log("Ödüllü Geçiş reklamı kapatıldı.");
-            OdulluGecisReklamOlustur();
+            OdulluReklamOlustur();
         };
 
         ad.OnAdFullScreenContentFailed += (AdError error) =>
         {
             Debug.Log("Geçiş reklamı tam ekran açılamadı. HATA: " + error);
-            OdulluGecisReklamOlustur();
+            OdulluReklamOlustur();
         };
     }
 
-    public void OdulluGecisReklamGoster()
+    public void OdulluReklamGoster()
     {
         const string odulMesaji = "Ödüllü Geçiş Kazanıldı. Ürün: {0}, Değer: {1}";
         if (Application.internetReachability != NetworkReachability.NotReachable)

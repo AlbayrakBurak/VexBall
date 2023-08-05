@@ -16,21 +16,34 @@ public class GecisReklami : MonoBehaviour
 #endif
 
     InterstitialAd _GecisReklami;
+    public GameObject NoAds;
 
     void Start()
     {
+        // MobileAds.Initialize(...) işlemi burada yapılır
         MobileAds.Initialize((InitializationStatus initStatus) =>
         {
-            
-        });
-        GecisReklamiOlustur();
-        int randomX = Random.Range(0,7);
-        Debug.Log(randomX);
-        if(randomX>=4){
+            // Reklam nesnesini oluştur
+            GecisReklamiOlustur();
 
-      
-        GecisReklamiGoster();
+            // "NoAds" anahtarının değerini PlayerPrefs'ten al ve 1'e eşit mi diye kontrol et
+            int noAdsValue = PlayerPrefs.GetInt("NoAds", 0);
+
+            if (noAdsValue != 1)
+            {
+                int randomX = Random.Range(0, 7);
+                Debug.Log(randomX);
+                if (randomX >= 4)
+                {
+                    // Random değer 4'ten büyükse reklam göster
+                    GecisReklamiGoster();
+                }
+            }
+             else{
+            NoAds.SetActive(false);
         }
+        });
+       
     }
 
     void GecisReklamiOlustur()

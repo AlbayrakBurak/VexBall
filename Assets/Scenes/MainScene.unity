@@ -5058,7 +5058,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1288405192}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1880770337}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1288405192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5367,6 +5379,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326970079}
   m_CullTransparentMesh: 1
+--- !u!1 &1352268918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1352268920}
+  - component: {fileID: 1352268919}
+  m_Layer: 0
+  m_Name: NoAds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1352268919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352268918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b39aa4a9983fac14bbedc55fd2c56bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1352268920
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352268918}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1371742005
 GameObject:
   m_ObjectHideFlags: 0
@@ -8658,6 +8714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a758e9146a7c0f645b0e1ba9af49b57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NoAds: {fileID: 2085555608}
 --- !u!114 &1880770342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8667,7 +8724,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1880770337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd29b0f9dc2bf6945876f3f0fa3e1721, type: 3}
+  m_Script: {fileID: 11500000, guid: f1e6a03d846dd5d42965571e018e1cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rewardContinueButton: {fileID: 1288405191}
@@ -9772,9 +9829,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1145362671}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: CustomizeScene
+      - m_Target: {fileID: 1352268919}
+        m_TargetAssemblyTypeName: PurchaseManager, Assembly-CSharp
+        m_MethodName: ProductBuy_NoAds
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

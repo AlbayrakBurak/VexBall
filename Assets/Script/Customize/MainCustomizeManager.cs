@@ -47,11 +47,11 @@ public class MainCustomizeManager : MonoBehaviour
 
             PlayerPrefs.SetInt("IsFirstTime", 0);
         }
-        else
-        {
-            ballRenderer.material=BallMaterials[numberBallMat-1];
-            topTrailRenderer.material=TrailMaterials[numberTrailMat-1];
-        }
+        // else 
+        // {
+        //     ballRenderer.material=BallMaterials[numberBallMat-1];
+        //     topTrailRenderer.material=TrailMaterials[numberTrailMat-1];
+        // }
         Debug.Log("numberBallMat: " + numberBallMat);
 Debug.Log("numberTrailMat: " + numberTrailMat);
         // PlayerPrefs ile kaydedilen platformIndex değerini alın

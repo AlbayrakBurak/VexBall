@@ -6,15 +6,25 @@ public class PanelController : MonoBehaviour
     public GameObject upperPanel; // Üst panelin referansı
     public GameObject BallPanel; // İlk panelin referansı
     public GameObject PlatformPanel; // İkinci panelin referansı
+    public GameObject NoAds;
 
     // Diğer değişkenleriniz aynı
 
     private void Start()
     {
-        
 
-       
-        upperPanel.SetActive(true);
+        int noAdsValue = PlayerPrefs.GetInt("NoAds", 0);
+
+            if (noAdsValue != 1)
+            {
+                NoAds.SetActive(true);
+            }
+             else{
+                
+            NoAds.SetActive(false);
+        }
+
+         upperPanel.SetActive(true);
         BallPanel.SetActive(true);
         PlatformPanel.SetActive(false);
 
