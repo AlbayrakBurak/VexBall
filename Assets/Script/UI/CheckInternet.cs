@@ -2,58 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-
 public class CheckInternet : MonoBehaviour
 {
+    [Header("--BUTTONS")]
+    [SerializeField] public Button playButton;
 
-     [Header("--BUTTONS") ]
-    [SerializeField] public Button playButton ;
-
-    [Header("--UI OBJECTS") ]
+    [Header("--UI OBJECTS")]
     public GameObject LoadingBar;
     public Image LoadingBarFill;
     public GameObject LoadingScreen;
     public TextMeshProUGUI loading;
 
-
-    [Header("--PANELS") ]
-
     public GameObject SuccessPanel;
     public GameObject ErrorPanel;
 
-
-  
-    void Start()
+    private void Start()
     {
-        StartCoroutine(CheckInternetConnection());
-    }
-
-    void  FixedUpdate()
-    {
-        Start();
-    }
-
-
-    IEnumerator CheckInternetConnection()
-    {
-        UnityWebRequest request = new UnityWebRequest("https://google.com");
-        
-        yield return request.SendWebRequest();
-
-        if(request.error != null)
-        {
-            ErrorPanel.SetActive(true);
-            SuccessPanel.SetActive(false);
-        }
-        else
-        {
-            ErrorPanel.SetActive(false);
-            SuccessPanel.SetActive(true);
-        }
+        SuccessPanel.SetActive(true);
+        ErrorPanel.SetActive(false);
     }
 
     public void TryAgain()
@@ -62,19 +31,17 @@ public class CheckInternet : MonoBehaviour
     }
 
     public void Play()
-    {   
-        playButton.interactable=false;
+    {
+        playButton.interactable = false;
         LoadingBar.SetActive(true);
         Loading();
-
     }
-
 
     public void Loading()
     {
         LoadingBarFill.fillAmount = 0.75f;
 
-        string sceneName="MainScene";
+        string sceneName = "MainScene";
         if (PlayerPrefs.HasKey("Level"))
         {
             PlayerPrefs.GetInt("Level");
@@ -82,7 +49,6 @@ public class CheckInternet : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt("Level", 1);
-           
         }
 
         StartCoroutine(LoadSceneAsync(sceneName));
@@ -106,5 +72,4 @@ public class CheckInternet : MonoBehaviour
             yield return null;
         }
     }
-
 }

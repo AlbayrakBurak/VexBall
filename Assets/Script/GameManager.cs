@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem[] Efektler;
 
     [Header("---Game Bonus")]
-    [SerializeField] private float timeLeft = 5f;
+    // [SerializeField] private float timeLeft = 5f;
 
     [SerializeField] private float timeLeftHoop = 5f;
     [SerializeField] private bool timeLeftHoopGrow = false;
@@ -61,8 +61,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] StartPanel;
     [SerializeField] private TMP_Text Count;
     [SerializeField] public GameObject FailPanel;
-    [SerializeField] private bool canStart;  // Oyunun başlamasına izin veren bayrak
-    [SerializeField] private bool gameStarted;  // Oyunun başladığını gösteren bayrak
+    // [SerializeField] private bool canStart;  // Oyunun başlamasına izin veren bayrak
+    // [SerializeField] private bool gameStarted;  // Oyunun başladığını gösteren bayrak
     [SerializeField] public GameObject swipeToStartPanel;  // Swipe to start paneli
     [SerializeField] private bool isGameStarted = false;
     [Header("---ADMOB")]
@@ -73,8 +73,8 @@ public class GameManager : MonoBehaviour
     float ParmakPozX;
     void Start()
     {   
-        canStart = false;
-        gameStarted = false;
+        // canStart = false;
+        // gameStarted = false;
         Time.timeScale = 1;
 
         isGameStart = true;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class BallScript : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class BallScript : MonoBehaviour
 
     private AdManager adManager;
 
+     private bool sceneLoaded = false; // Sahne yüklendi mi?
+
     private void Awake()
     {
         ballRenderer = GameObject.FindGameObjectWithTag("Top").GetComponent<Renderer>(); // Topun Renderer bileşenine erişmek için GetComponent kullanın
@@ -33,6 +36,7 @@ public class BallScript : MonoBehaviour
         CheckAndSetDefaultMaterials(); // Önce kayıt var mı kontrol edelim, yoksa default materyalleri ayarlayalım
         LoadData(); // Kaydedilmiş verileri yükle
         adManager.OdulluGecisReklamOlustur();
+         UpdateBallCountTextDelayed();
 
     }
 
@@ -131,6 +135,29 @@ public class BallScript : MonoBehaviour
         }
 
         
+    }
+    private void Update()
+    {
+        // Sahne yüklendiğinde top sayısını güncelle
+        if (!sceneLoaded)
+        {
+            UpdateBallCountText();
+       
+            sceneLoaded = true;
+
+        }
+        
+    }
+    private void UpdateBallCountTextDelayed()
+    {
+        // Kısa bir bekleme sonrasında top sayısını güncelle
+        StartCoroutine(DelayedUpdate());
+    }
+
+    private IEnumerator DelayedUpdate()
+    {
+        yield return new WaitForSeconds(0.1f); // Belirli bir süre bekletin (isteğe bağlı)
+        UpdateBallCountText();
     }
 
     private void SaveData()

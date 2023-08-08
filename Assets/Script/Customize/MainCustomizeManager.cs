@@ -7,7 +7,7 @@ public class MainCustomizeManager : MonoBehaviour
     public GameObject platform1; // İlk platform objesi
     public GameObject platform2; // İkinci platform objesi
     public GameObject platform3; // Üçüncü platform objesi
-    private Renderer ballRenderer; // Renderer referansı eklendi
+    public Renderer ballRenderer; // Renderer referansı eklendi
     public TrailRenderer topTrailRenderer; // Topun TrailRenderer bileşeni
     public Material[] BallMaterials;
     public Material[] TrailMaterials;
@@ -47,11 +47,11 @@ public class MainCustomizeManager : MonoBehaviour
 
             PlayerPrefs.SetInt("IsFirstTime", 0);
         }
-        // else 
-        // {
-        //     ballRenderer.material=BallMaterials[numberBallMat-1];
-        //     topTrailRenderer.material=TrailMaterials[numberTrailMat-1];
-        // }
+        else 
+        {
+            ballRenderer.material=BallMaterials[numberBallMat-1];
+            topTrailRenderer.material=TrailMaterials[numberTrailMat-1];
+        }
         Debug.Log("numberBallMat: " + numberBallMat);
 Debug.Log("numberTrailMat: " + numberTrailMat);
         // PlayerPrefs ile kaydedilen platformIndex değerini alın
