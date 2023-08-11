@@ -13,7 +13,7 @@ public class OdulluReklamResume : MonoBehaviour
 #elif UNITY_IPHONE
     string adUnitID = "ca-app-pub-3940256099942544/6978759866";
 #else
-    string adUnitID = "ca-app-pub-7605629714512840/3536483075";
+    string adUnitID = "ca-app-pub-2503905544116215/4076760319";
 #endif
 
     RewardedAd odulluGecisReklam;

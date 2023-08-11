@@ -11,7 +11,7 @@ public class AdManager : MonoBehaviour
 #elif UNITY_IPHONE
     string adUnitID = "ca-app-pub-3940256099942544/6978759866";
 #else
-    string adUnitID = "ca-app-pub-7605629714512840/2946236383";
+    string adUnitID = "ca-app-pub-2503905544116215/2596157684";
 #endif
 
     RewardedAd ballSkinReward;
