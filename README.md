@@ -1,5 +1,5 @@
 # VexBall
-SlamDunk HyperCasual Game
+VexBall HyperCasual Game
 
 Play Store: https://play.google.com/store/apps/details?id=com.Veyamu.VexBall&hl=tr&gl=TR
 
